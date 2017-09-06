@@ -19,12 +19,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.annotation.VisibleForTesting
 import android.support.design.widget.NavigationView
+import android.support.inject
 import android.support.test.espresso.IdlingResource
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
-import com.example.android.architecture.blueprints.todoapp.Injection
 import com.example.android.architecture.blueprints.todoapp.R
 import com.example.android.architecture.blueprints.todoapp.statistics.StatisticsActivity
 import com.example.android.architecture.blueprints.todoapp.util.EspressoIdlingResource
@@ -37,7 +37,7 @@ class TasksActivity : AppCompatActivity() {
 
     private lateinit var drawerLayout: DrawerLayout
 
-    private lateinit var tasksPresenter: TasksPresenter
+    private val tasksPresenter by inject<TasksPresenter>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,8 +61,7 @@ class TasksActivity : AppCompatActivity() {
         }
 
         // Create the presenter
-        tasksPresenter = TasksPresenter(Injection.provideTasksRepository(applicationContext),
-                tasksFragment).apply {
+        tasksPresenter.apply {
             // Load previously saved state, if available.
             if (savedInstanceState != null) {
                 currentFiltering = savedInstanceState.getSerializable(CURRENT_FILTERING_KEY)

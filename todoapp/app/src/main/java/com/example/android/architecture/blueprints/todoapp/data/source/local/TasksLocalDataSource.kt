@@ -28,7 +28,7 @@ import com.example.android.architecture.blueprints.todoapp.data.source.local.Tas
 /**
  * Concrete implementation of a data source as a db.
  */
-class TasksLocalDataSource private constructor(context: Context) : TasksDataSource {
+class TasksLocalDataSource(val context: Context) : TasksDataSource {
 
     private val dbHelper: TasksDbHelper = TasksDbHelper(context)
 
@@ -87,7 +87,7 @@ class TasksLocalDataSource private constructor(context: Context) : TasksDataSour
                 val itemId = getString(getColumnIndexOrThrow(COLUMN_NAME_ENTRY_ID))
                 val title = getString(getColumnIndexOrThrow(COLUMN_NAME_TITLE))
                 val description = getString(getColumnIndexOrThrow(COLUMN_NAME_DESCRIPTION))
-                 task = Task(title, description, itemId).apply {
+                task = Task(title, description, itemId).apply {
                     isCompleted = getInt(getColumnIndexOrThrow(COLUMN_NAME_COMPLETED)) == 1
                 }
             }
@@ -172,12 +172,5 @@ class TasksLocalDataSource private constructor(context: Context) : TasksDataSour
             delete(TABLE_NAME, selection, selectionArgs)
             close()
         }
-    }
-
-    companion object {
-        private var INSTANCE: TasksLocalDataSource? = null
-
-        @JvmStatic fun getInstance(context: Context) =
-                INSTANCE ?: TasksLocalDataSource(context).apply { INSTANCE = this }
     }
 }

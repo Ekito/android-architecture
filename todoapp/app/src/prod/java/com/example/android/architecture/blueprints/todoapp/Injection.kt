@@ -26,9 +26,12 @@ import com.example.android.architecture.blueprints.todoapp.data.source.remote.Ta
  * Enables injection of production implementations for
  * [TasksDataSource] at compile time.
  */
+//TODO remove
 object Injection {
 
-    fun provideTasksRepository(context: Context) =
-            TasksRepository.getInstance(TasksRemoteDataSource,
-                    TasksLocalDataSource.getInstance(context))
+    fun provideTasksRepository(context: Context) = TodoApplication.koinContext.get()
+
+
+//            TasksRepository.getInstance(TasksRemoteDataSource,
+//                    TasksLocalDataSource.getInstance(context))
 }

@@ -27,7 +27,7 @@ import java.util.ArrayList
  * Listens to user actions from the UI ([TasksFragment]), retrieves the data and updates the
  * UI as required.
  */
-class TasksPresenter(val tasksRepository: TasksRepository, val tasksView: TasksContract.View)
+class TasksPresenter(private val tasksRepository: TasksRepository, val tasksView: TasksContract.View)
     : TasksContract.Presenter {
 
     override var currentFiltering = TasksFilterType.ALL_TASKS

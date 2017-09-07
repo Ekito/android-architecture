@@ -19,7 +19,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.annotation.VisibleForTesting
 import android.support.design.widget.NavigationView
-import android.support.inject
 import android.support.test.espresso.IdlingResource
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
@@ -30,6 +29,8 @@ import com.example.android.architecture.blueprints.todoapp.statistics.Statistics
 import com.example.android.architecture.blueprints.todoapp.util.EspressoIdlingResource
 import com.example.android.architecture.blueprints.todoapp.util.replaceFragmentInActivity
 import com.example.android.architecture.blueprints.todoapp.util.setupActionBar
+import org.koin.android.ext.android.app.inject
+import org.koin.android.ext.android.app.release
 
 class TasksActivity : AppCompatActivity() {
 
@@ -38,6 +39,7 @@ class TasksActivity : AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout
 
     private val tasksPresenter by inject<TasksPresenter>()
+    private val tasksFragment by inject<TasksFragment>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,8 +57,8 @@ class TasksActivity : AppCompatActivity() {
         }
         setupDrawerContent(findViewById(R.id.nav_view))
 
-        val tasksFragment = supportFragmentManager.findFragmentById(R.id.contentFrame)
-                as TasksFragment? ?: TasksFragment.newInstance().also {
+        supportFragmentManager.findFragmentById(R.id.contentFrame)
+                as TasksFragment? ?: tasksFragment.also {
             replaceFragmentInActivity(it, R.id.contentFrame)
         }
 
@@ -68,6 +70,11 @@ class TasksActivity : AppCompatActivity() {
                         as TasksFilterType
             }
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        release()
     }
 
     public override fun onSaveInstanceState(outState: Bundle) {

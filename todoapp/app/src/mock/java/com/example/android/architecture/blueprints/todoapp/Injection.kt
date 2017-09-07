@@ -16,21 +16,21 @@
 package com.example.android.architecture.blueprints.todoapp
 
 import android.content.Context
-
-import com.example.android.architecture.blueprints.todoapp.data.FakeTasksRemoteDataSource
 import com.example.android.architecture.blueprints.todoapp.data.source.TasksDataSource
 import com.example.android.architecture.blueprints.todoapp.data.source.TasksRepository
-import com.example.android.architecture.blueprints.todoapp.data.source.local.TasksLocalDataSource
 
 /**
  * Enables injection of mock implementations for
  * [TasksDataSource] at compile time. This is useful for testing, since it allows us to use
  * a fake instance of the class to isolate the dependencies and run a test hermetically.
  */
+
+//TODO remove
 object Injection {
 
-    @JvmStatic fun provideTasksRepository(context: Context): TasksRepository {
-        return TasksRepository.getInstance(FakeTasksRemoteDataSource.getInstance(),
-                TasksLocalDataSource.getInstance(context))
-    }
+    @JvmStatic
+    fun provideTasksRepository(context: Context): TasksRepository =
+            TodoApplication.koinContext.get()
+//        return TasksRepository.getInstance(FakeTasksRemoteDataSource.getInstance(),
+//                TasksLocalDataSource.getInstance(context))
 }

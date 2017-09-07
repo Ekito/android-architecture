@@ -23,9 +23,9 @@ import com.google.common.collect.Lists
 /**
  * Implementation of the data source that adds a latency simulating network.
  */
-object TasksRemoteDataSource : TasksDataSource {
+class TasksRemoteDataSource() : TasksDataSource {
 
-    private const val SERVICE_LATENCY_IN_MILLIS = 5000L
+    private val SERVICE_LATENCY_IN_MILLIS = 5000L
 
     private var TASKS_SERVICE_DATA = LinkedHashMap<String, Task>(2)
 

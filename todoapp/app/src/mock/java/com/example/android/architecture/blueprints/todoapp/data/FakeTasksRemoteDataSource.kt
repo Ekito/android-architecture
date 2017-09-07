@@ -22,7 +22,7 @@ import com.google.common.collect.Lists
 /**
  * Implementation of a remote data source with static access to the data for easy testing.
  */
-class FakeTasksRemoteDataSource private constructor() : TasksDataSource {
+class FakeTasksRemoteDataSource() : TasksDataSource {
 
     private val TASKS_SERVICE_DATA = LinkedHashMap<String, Task>()
 
@@ -92,17 +92,17 @@ class FakeTasksRemoteDataSource private constructor() : TasksDataSource {
         }
     }
 
-    companion object {
-
-        private lateinit var INSTANCE: FakeTasksRemoteDataSource
-        private var needsNewInstance = true
-
-        @JvmStatic fun getInstance(): FakeTasksRemoteDataSource {
-            if (needsNewInstance) {
-                INSTANCE = FakeTasksRemoteDataSource()
-                needsNewInstance = false
-            }
-            return INSTANCE
-        }
-    }
+//    companion object {
+//
+//        private lateinit var INSTANCE: FakeTasksRemoteDataSource
+//        private var needsNewInstance = true
+//
+//        @JvmStatic fun getInstance(): FakeTasksRemoteDataSource {
+//            if (needsNewInstance) {
+//                INSTANCE = FakeTasksRemoteDataSource()
+//                needsNewInstance = false
+//            }
+//            return INSTANCE
+//        }
+//    }
 }

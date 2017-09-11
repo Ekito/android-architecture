@@ -23,6 +23,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 
 import com.example.android.architecture.blueprints.todoapp.R
+import org.koin.android.ext.android.app.inject
 
 /**
  * Main UI for the statistics screen.
@@ -31,7 +32,7 @@ class StatisticsFragment : Fragment(), StatisticsContract.View {
 
     private lateinit var statisticsTV: TextView
 
-    override lateinit var presenter: StatisticsContract.Presenter
+    val presenter by inject<StatisticsContract.Presenter>()
 
     override val isActive: Boolean
         get() = isAdded
@@ -45,6 +46,7 @@ class StatisticsFragment : Fragment(), StatisticsContract.View {
 
     override fun onResume() {
         super.onResume()
+        presenter.view = this
         presenter.start()
     }
 

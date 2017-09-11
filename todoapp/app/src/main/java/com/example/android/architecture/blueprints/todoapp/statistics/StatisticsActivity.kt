@@ -22,11 +22,11 @@ import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
-
-import com.example.android.architecture.blueprints.todoapp.Injection
 import com.example.android.architecture.blueprints.todoapp.R
 import com.example.android.architecture.blueprints.todoapp.util.replaceFragmentInActivity
 import com.example.android.architecture.blueprints.todoapp.util.setupActionBar
+import org.koin.android.ext.android.app.inject
+import org.koin.android.ext.android.app.release
 
 /**
  * Show statistics for tasks.
@@ -34,6 +34,8 @@ import com.example.android.architecture.blueprints.todoapp.util.setupActionBar
 class StatisticsActivity : AppCompatActivity() {
 
     private lateinit var drawerLayout: DrawerLayout
+
+    val statisticsFragment by inject<StatisticsFragment>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,14 +56,16 @@ class StatisticsActivity : AppCompatActivity() {
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
         setupDrawerContent(navigationView)
 
-        val statisticsFragment = supportFragmentManager
+        supportFragmentManager
                 .findFragmentById(R.id.contentFrame) as StatisticsFragment?
-                ?: StatisticsFragment.newInstance().also {
+                ?: statisticsFragment.also {
             replaceFragmentInActivity(it, R.id.contentFrame)
         }
+    }
 
-        StatisticsPresenter(
-                Injection.provideTasksRepository(applicationContext), statisticsFragment)
+    override fun onStop() {
+        super.onStop()
+        release()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

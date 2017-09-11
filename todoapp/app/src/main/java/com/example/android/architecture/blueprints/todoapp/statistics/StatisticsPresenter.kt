@@ -26,20 +26,17 @@ import com.example.android.architecture.blueprints.todoapp.util.EspressoIdlingRe
  * the UI as required.
  */
 class StatisticsPresenter(
-        val tasksRepository: TasksRepository,
-        val statisticsView: StatisticsContract.View
-) : StatisticsContract.Presenter {
+        val tasksRepository: TasksRepository
+        ) : StatisticsContract.Presenter {
 
-    init {
-        statisticsView.presenter = this
-    }
+    override lateinit var view: StatisticsContract.View
 
     override fun start() {
         loadStatistics()
     }
 
     private fun loadStatistics() {
-        statisticsView.setProgressIndicator(true)
+        view.setProgressIndicator(true)
 
         // The network request might be handled in a different thread so make sure Espresso knows
         // that the app is busy until the response is handled.
@@ -58,19 +55,19 @@ class StatisticsPresenter(
                     EspressoIdlingResource.decrement() // Set app as idle.
                 }
                 // The view may not be able to handle UI updates anymore
-                if (!statisticsView.isActive) {
+                if (!view.isActive) {
                     return
                 }
-                statisticsView.setProgressIndicator(false)
-                statisticsView.showStatistics(activeTasks, completedTasks)
+                view.setProgressIndicator(false)
+                view.showStatistics(activeTasks, completedTasks)
             }
 
             override fun onDataNotAvailable() {
                 // The view may not be able to handle UI updates anymore
-                if (!statisticsView.isActive) {
+                if (!view.isActive) {
                     return
                 }
-                statisticsView.showLoadingStatisticsError()
+                view.showLoadingStatisticsError()
             }
         })
     }

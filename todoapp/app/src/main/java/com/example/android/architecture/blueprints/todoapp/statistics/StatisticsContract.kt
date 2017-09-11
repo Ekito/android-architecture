@@ -23,7 +23,7 @@ import com.example.android.architecture.blueprints.todoapp.BaseView
  */
 interface StatisticsContract {
 
-    interface View : BaseView<Presenter> {
+    interface View : BaseView {
         val isActive: Boolean
 
         fun setProgressIndicator(active: Boolean)
@@ -33,5 +33,5 @@ interface StatisticsContract {
         fun showLoadingStatisticsError()
     }
 
-    interface Presenter : BasePresenter
+    interface Presenter : BasePresenter<View>
 }

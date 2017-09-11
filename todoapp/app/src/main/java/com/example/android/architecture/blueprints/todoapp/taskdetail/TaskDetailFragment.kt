@@ -21,18 +21,15 @@ import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.CheckBox
 import android.widget.TextView
 import com.example.android.architecture.blueprints.todoapp.R
 import com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskActivity
 import com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskFragment
 import com.example.android.architecture.blueprints.todoapp.util.showSnackBar
+import org.koin.android.ext.android.app.inject
+import org.koin.android.ext.android.app.property
 
 /**
  * Main UI for the task detail screen.
@@ -45,18 +42,21 @@ class TaskDetailFragment : Fragment(), TaskDetailContract.View {
 
     private lateinit var detailCompleteStatus: CheckBox
 
-    override lateinit var presenter: TaskDetailContract.Presenter
+    val presenter by inject<TaskDetailPresenter>()
+
+    val taskId by property<String>(TaskDetailActivity.EXTRA_TASK_ID)
 
     override var isActive: Boolean = false
         get() = isAdded
 
     override fun onResume() {
         super.onResume()
+        presenter.view = this
         presenter.start()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.taskdetail_frag, container, false)
         setHasOptionsMenu(true)
         with(root) {
@@ -158,14 +158,14 @@ class TaskDetailFragment : Fragment(), TaskDetailContract.View {
 
     companion object {
 
-        private val ARGUMENT_TASK_ID = "TASK_ID"
+//        private val ARGUMENT_TASK_ID = "TASK_ID"
 
         private val REQUEST_EDIT_TASK = 1
 
-        fun newInstance(taskId: String?) =
-                TaskDetailFragment().apply {
-                    arguments = Bundle().apply { putString(ARGUMENT_TASK_ID, taskId) }
-                }
+//        fun newInstance(taskId: String?) =
+//                TaskDetailFragment().apply {
+//                    arguments = Bundle().apply { putString(ARGUMENT_TASK_ID, taskId) }
+//                }
     }
 
 }

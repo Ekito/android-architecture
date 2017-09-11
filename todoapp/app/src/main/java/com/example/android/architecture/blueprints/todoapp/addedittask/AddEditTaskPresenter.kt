@@ -26,20 +26,17 @@ import com.example.android.architecture.blueprints.todoapp.data.source.TasksData
  *
  * @param tasksRepository a repository of data for tasks
  *
- * @param addTaskView the add/edit view
+ * @param view the add/edit view
  *
  * @param isDataMissing whether data needs to be loaded or not (for config changes)
  */
 class AddEditTaskPresenter(
         private val taskId: String?,
         val tasksRepository: TasksDataSource,
-        val addTaskView: AddEditTaskContract.View,
         override var isDataMissing: Boolean
 ) : AddEditTaskContract.Presenter, TasksDataSource.GetTaskCallback {
 
-    init {
-        addTaskView.presenter = this
-    }
+    override lateinit var view: AddEditTaskContract.View
 
     override fun start() {
         if (taskId != null && isDataMissing) {
@@ -64,27 +61,27 @@ class AddEditTaskPresenter(
 
     override fun onTaskLoaded(task: Task) {
         // The view may not be able to handle UI updates anymore
-        if (addTaskView.isActive) {
-            addTaskView.setTitle(task.title)
-            addTaskView.setDescription(task.description)
+        if (view.isActive) {
+            view.setTitle(task.title)
+            view.setDescription(task.description)
         }
         isDataMissing = false
     }
 
     override fun onDataNotAvailable() {
         // The view may not be able to handle UI updates anymore
-        if (addTaskView.isActive) {
-            addTaskView.showEmptyTaskError()
+        if (view.isActive) {
+            view.showEmptyTaskError()
         }
     }
 
     private fun createTask(title: String, description: String) {
         val newTask = Task(title, description)
         if (newTask.isEmpty) {
-            addTaskView.showEmptyTaskError()
+            view.showEmptyTaskError()
         } else {
             tasksRepository.saveTask(newTask)
-            addTaskView.showTasksList()
+            view.showTasksList()
         }
     }
 
@@ -93,6 +90,6 @@ class AddEditTaskPresenter(
             throw RuntimeException("updateTask() was called but task is new.")
         }
         tasksRepository.saveTask(Task(title, description, taskId))
-        addTaskView.showTasksList() // After an edit, go back to the list.
+        view.showTasksList() // After an edit, go back to the list.
     }
 }

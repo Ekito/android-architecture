@@ -27,13 +27,15 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.example.android.architecture.blueprints.todoapp.R
 import com.example.android.architecture.blueprints.todoapp.util.showSnackBar
+import org.koin.android.ext.android.app.inject
 
 /**
  * Main UI for the add task screen. Users can enter a task title and description.
  */
 class AddEditTaskFragment : Fragment(), AddEditTaskContract.View {
 
-    override lateinit var presenter: AddEditTaskContract.Presenter
+    val presenter by inject<AddEditTaskContract.Presenter>()
+
     override var isActive = false
         get() = isAdded
 
@@ -43,6 +45,7 @@ class AddEditTaskFragment : Fragment(), AddEditTaskContract.View {
 
     override fun onResume() {
         super.onResume()
+        presenter.view = this
         presenter.start()
     }
 
@@ -57,7 +60,7 @@ class AddEditTaskFragment : Fragment(), AddEditTaskContract.View {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.addtask_frag, container, false)
         with(root) {
             title = findViewById(R.id.add_task_title)
@@ -89,11 +92,11 @@ class AddEditTaskFragment : Fragment(), AddEditTaskContract.View {
     companion object {
         const val ARGUMENT_EDIT_TASK_ID = "EDIT_TASK_ID"
 
-        fun newInstance(taskId: String?) =
-                AddEditTaskFragment().apply {
-                    arguments = Bundle().apply {
-                        putString(AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID, taskId)
-                    }
-                }
+//        fun newInstance(taskId: String?) =
+//                AddEditTaskFragment().apply {
+//                    arguments = Bundle().apply {
+//                        putString(AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID, taskId)
+//                    }
+//                }
     }
 }

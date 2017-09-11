@@ -23,7 +23,7 @@ import com.example.android.architecture.blueprints.todoapp.BaseView
  */
 interface TaskDetailContract {
 
-    interface View : BaseView<Presenter> {
+    interface View : BaseView {
 
         val isActive: Boolean
 
@@ -50,7 +50,7 @@ interface TaskDetailContract {
         fun showTaskMarkedActive()
     }
 
-    interface Presenter : BasePresenter {
+    interface Presenter : BasePresenter<View> {
 
         fun editTask()
 

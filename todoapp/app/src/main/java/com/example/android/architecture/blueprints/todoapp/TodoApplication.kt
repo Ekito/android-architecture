@@ -1,8 +1,7 @@
 package com.example.android.architecture.blueprints.todoapp
 
 import android.app.Application
-import android.support.multidex.MultiDexApplication
-import com.example.android.architecture.blueprints.todoapp.koin.TasksActivityModule
+import com.example.android.architecture.blueprints.todoapp.koin.moduleList
 import org.koin.Koin
 import org.koin.KoinContext
 import org.koin.android.KoinContextAware
@@ -18,7 +17,7 @@ class TodoApplication : Application(), KoinContextAware {
     override fun onCreate() {
         super.onCreate()
 
-        koinContext = Koin().init(this).build(RepositoryModule(), TasksActivityModule())
+        koinContext = Koin().init(this).build(*moduleList())
     }
 
     companion object {

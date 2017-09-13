@@ -5,7 +5,9 @@ import org.koin.android.AndroidModule
 
 class RepositoryModule : AndroidModule() {
     override fun context() = declareContext {
-        //TODO bind multi components for TasksDataSource
-        provide { TasksRepository(TasksRemoteDataSource(), TasksLocalDataSource(applicationContext)) } bind { TasksDataSource::class }
+        provide("remoteDataSource") { TasksRemoteDataSource() }
+        provide("localDataSource") { TasksLocalDataSource(applicationContext) }
+
+        provide { TasksRepository(get("remoteDataSource"), get("localDataSource")) } bind { TasksDataSource::class }
     }
 }

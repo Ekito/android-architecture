@@ -1,4 +1,4 @@
-package com.example.android.architecture.blueprints.todoapp.koin
+package com.example.android.architecture.blueprints.todoapp.di
 
 import com.example.android.architecture.blueprints.todoapp.RepositoryModule
 import com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskActivity

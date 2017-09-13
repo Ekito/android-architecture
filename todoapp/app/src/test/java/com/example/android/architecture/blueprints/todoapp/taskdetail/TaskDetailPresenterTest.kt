@@ -68,19 +68,11 @@ class TaskDetailPresenterTest {
         `when`(taskDetailView.isActive).thenReturn(true)
     }
 
-    @Test fun createPresenter_setsThePresenterToView() {
-        // Get a reference to the class under test
-        taskDetailPresenter = TaskDetailPresenter(
-                ACTIVE_TASK.id, tasksRepository, taskDetailView)
-
-        // Then the presenter is set to the view
-        verify(taskDetailView).presenter = taskDetailPresenter
-    }
-
     @Test fun getActiveTaskFromRepositoryAndLoadIntoView() {
         // When tasks presenter is asked to open a task
-        taskDetailPresenter = TaskDetailPresenter(
-                ACTIVE_TASK.id, tasksRepository, taskDetailView).apply { start() }
+        taskDetailPresenter = TaskDetailPresenter(ACTIVE_TASK.id, tasksRepository)
+        taskDetailPresenter.view = taskDetailView
+        taskDetailPresenter.apply { start() }
 
         // Then task is loaded from model, callback is captured and progress indicator is shown
         verify(tasksRepository).getTask(eq(ACTIVE_TASK.id),
@@ -100,8 +92,9 @@ class TaskDetailPresenterTest {
     }
 
     @Test fun getCompletedTaskFromRepositoryAndLoadIntoView() {
-        taskDetailPresenter = TaskDetailPresenter(
-                COMPLETED_TASK.id, tasksRepository, taskDetailView).apply { start() }
+        taskDetailPresenter = TaskDetailPresenter(COMPLETED_TASK.id, tasksRepository)
+        taskDetailPresenter.view = taskDetailView
+        taskDetailPresenter.apply { start() }
 
         // Then task is loaded from model, callback is captured and progress indicator is shown
         verify(tasksRepository).getTask(
@@ -122,8 +115,10 @@ class TaskDetailPresenterTest {
 
     @Test fun getUnknownTaskFromRepositoryAndLoadIntoView() {
         // When loading of a task is requested with an invalid task ID.
-        taskDetailPresenter = TaskDetailPresenter(
-                INVALID_TASK_ID, tasksRepository, taskDetailView).apply { start() }
+        taskDetailPresenter = TaskDetailPresenter(INVALID_TASK_ID, tasksRepository)
+        taskDetailPresenter.view = taskDetailView
+        taskDetailPresenter.apply { start() }
+
         verify(taskDetailView).showMissingTask()
     }
 
@@ -132,8 +127,9 @@ class TaskDetailPresenterTest {
         val task = Task(TITLE_TEST, DESCRIPTION_TEST)
 
         // When the deletion of a task is requested
-        taskDetailPresenter = TaskDetailPresenter(
-                task.id, tasksRepository, taskDetailView).apply { deleteTask() }
+        taskDetailPresenter = TaskDetailPresenter( task.id, tasksRepository)
+        taskDetailPresenter.view = taskDetailView
+        taskDetailPresenter.apply { deleteTask() }
 
         // Then the repository and the view are notified
         verify(tasksRepository).deleteTask(task.id)
@@ -143,8 +139,9 @@ class TaskDetailPresenterTest {
     @Test fun completeTask() {
         // Given an initialized presenter with an active task
         val task = Task(TITLE_TEST, DESCRIPTION_TEST)
-        taskDetailPresenter = TaskDetailPresenter(
-                task.id, tasksRepository, taskDetailView).apply {
+        taskDetailPresenter = TaskDetailPresenter(task.id, tasksRepository)
+        taskDetailPresenter.view = taskDetailView
+        taskDetailPresenter.apply {
             start()
             completeTask()
         }
@@ -157,8 +154,9 @@ class TaskDetailPresenterTest {
     @Test fun activateTask() {
         // Given an initialized presenter with a completed task
         val task = Task(TITLE_TEST, DESCRIPTION_TEST).apply { isCompleted = true }
-        taskDetailPresenter = TaskDetailPresenter(
-                task.id, tasksRepository, taskDetailView).apply {
+        taskDetailPresenter = TaskDetailPresenter(task.id, tasksRepository)
+        taskDetailPresenter.view = taskDetailView
+        taskDetailPresenter.apply {
             start()
             activateTask()
         }
@@ -170,8 +168,9 @@ class TaskDetailPresenterTest {
 
     @Test fun activeTaskIsShownWhenEditing() {
         // When the edit of an ACTIVE_TASK is requested
-        taskDetailPresenter = TaskDetailPresenter(
-                ACTIVE_TASK.id, tasksRepository, taskDetailView).apply { editTask() }
+        taskDetailPresenter = TaskDetailPresenter(ACTIVE_TASK.id, tasksRepository)
+        taskDetailPresenter.view = taskDetailView
+        taskDetailPresenter.apply { editTask() }
 
         // Then the view is notified
         verify(taskDetailView).showEditTask(ACTIVE_TASK.id)
@@ -179,8 +178,9 @@ class TaskDetailPresenterTest {
 
     @Test fun invalidTaskIsNotShownWhenEditing() {
         // When the edit of an invalid task id is requested
-        taskDetailPresenter = TaskDetailPresenter(
-                INVALID_TASK_ID, tasksRepository, taskDetailView).apply { editTask() }
+        taskDetailPresenter = TaskDetailPresenter(INVALID_TASK_ID, tasksRepository)
+        taskDetailPresenter.view = taskDetailView
+        taskDetailPresenter.apply { editTask() }
 
         // Then the edit mode is never started
         verify(taskDetailView, never()).showEditTask(INVALID_TASK_ID)

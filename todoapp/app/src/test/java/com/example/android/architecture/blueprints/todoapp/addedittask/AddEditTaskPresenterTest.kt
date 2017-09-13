@@ -59,18 +59,11 @@ class AddEditTaskPresenterTest {
         `when`(addEditTaskView.isActive).thenReturn(true)
     }
 
-    @Test fun createPresenter_setsThePresenterToView() {
-        // Get a reference to the class under test
-        addEditTaskPresenter = AddEditTaskPresenter(
-                null, tasksRepository, addEditTaskView, true)
-
-        // Then the presenter is set to the view
-        verify(addEditTaskView).presenter = addEditTaskPresenter
-    }
-
     @Test fun saveNewTaskToRepository_showsSuccessMessageUi() {
         // Get a reference to the class under test
-        addEditTaskPresenter = AddEditTaskPresenter(null, tasksRepository, addEditTaskView, true)
+//        addEditTaskPresenter = AddEditTaskPresenter(null, tasksRepository, addEditTaskView, true)
+        addEditTaskPresenter = AddEditTaskPresenter(null, tasksRepository, true)
+        addEditTaskPresenter.view = addEditTaskView
 
         // When the presenter is asked to save a task
         addEditTaskPresenter.saveTask("New Task Title", "Some Task Description")
@@ -82,7 +75,9 @@ class AddEditTaskPresenterTest {
 
     @Test fun saveTask_emptyTaskShowsErrorUi() {
         // Get a reference to the class under test
-        addEditTaskPresenter = AddEditTaskPresenter(null, tasksRepository, addEditTaskView, true)
+//        addEditTaskPresenter = AddEditTaskPresenter(null, tasksRepository, addEditTaskView, true)
+        addEditTaskPresenter = AddEditTaskPresenter(null, tasksRepository, true)
+        addEditTaskPresenter.view = addEditTaskView
 
         // When the presenter is asked to save an empty task
         addEditTaskPresenter.saveTask("", "")
@@ -93,8 +88,10 @@ class AddEditTaskPresenterTest {
 
     @Test fun saveExistingTaskToRepository_showsSuccessMessageUi() {
         // Get a reference to the class under test
-        addEditTaskPresenter = AddEditTaskPresenter(
-                "1", tasksRepository, addEditTaskView, true)
+//        addEditTaskPresenter = AddEditTaskPresenter(
+//                "1", tasksRepository, addEditTaskView, true)
+        addEditTaskPresenter = AddEditTaskPresenter("1", tasksRepository, true)
+        addEditTaskPresenter.view = addEditTaskView
 
         // When the presenter is asked to save an existing task
         addEditTaskPresenter.saveTask("Existing Task Title", "Some Task Description")
@@ -107,8 +104,9 @@ class AddEditTaskPresenterTest {
     @Test fun populateTask_callsRepoAndUpdatesView() {
         val testTask = Task("TITLE", "DESCRIPTION")
         // Get a reference to the class under test
-        addEditTaskPresenter = AddEditTaskPresenter(testTask.id,
-                tasksRepository, addEditTaskView, true).apply {
+        addEditTaskPresenter = AddEditTaskPresenter(testTask.id, tasksRepository, true)
+        addEditTaskPresenter.view = addEditTaskView
+        addEditTaskPresenter.apply {
             // When the presenter is asked to populate an existing task
             populateTask()
         }

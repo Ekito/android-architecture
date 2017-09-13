@@ -1,7 +1,7 @@
 package com.example.android.architecture.blueprints.todoapp
 
 import android.app.Application
-import com.example.android.architecture.blueprints.todoapp.koin.moduleList
+import com.example.android.architecture.blueprints.todoapp.di.moduleList
 import org.koin.Koin
 import org.koin.KoinContext
 import org.koin.android.KoinContextAware

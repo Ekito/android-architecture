@@ -45,13 +45,15 @@ class StatisticsPresenterTest {
     private lateinit var statisticsPresenter: StatisticsPresenter
     private lateinit var tasks: MutableList<Task>
 
-    @Before fun setupStatisticsPresenter() {
+    @Before
+    fun setupStatisticsPresenter() {
         // Mockito has a very convenient way to inject mocks by using the @Mock annotation. To
         // inject the mocks in the test the initMocks method needs to be called.
         MockitoAnnotations.initMocks(this)
 
         // Get a reference to the class under test
-        statisticsPresenter = StatisticsPresenter(tasksRepository, statisticsView)
+        statisticsPresenter = StatisticsPresenter(tasksRepository)
+        statisticsPresenter.view = statisticsView
 
         // The presenter won't update the view unless it's active.
         `when`(statisticsView.isActive).thenReturn(true)
@@ -62,15 +64,8 @@ class StatisticsPresenterTest {
                 Task("Title3", "Description3").apply { isCompleted = true })
     }
 
-    @Test fun createPresenter_setsThePresenterToView() {
-        // Get a reference to the class under test
-        statisticsPresenter = StatisticsPresenter(tasksRepository, statisticsView)
-
-        // Then the presenter is set to the view
-        verify(statisticsView).presenter = statisticsPresenter
-    }
-
-    @Test fun loadEmptyTasksFromRepository_CallViewToDisplay() {
+    @Test
+    fun loadEmptyTasksFromRepository_CallViewToDisplay() {
         // Given an initialized StatisticsPresenter with no tasks
         tasks.clear()
 
@@ -89,7 +84,8 @@ class StatisticsPresenterTest {
         verify(statisticsView).showStatistics(0, 0)
     }
 
-    @Test fun loadNonEmptyTasksFromRepository_CallViewToDisplay() {
+    @Test
+    fun loadNonEmptyTasksFromRepository_CallViewToDisplay() {
         // Given an initialized StatisticsPresenter with 1 active and 2 completed tasks
 
         // When loading of Tasks is requested
@@ -107,7 +103,8 @@ class StatisticsPresenterTest {
         verify(statisticsView).showStatistics(1, 2)
     }
 
-    @Test fun loadStatisticsWhenTasksAreUnavailable_CallErrorToDisplay() {
+    @Test
+    fun loadStatisticsWhenTasksAreUnavailable_CallErrorToDisplay() {
         // When statistics are loaded
         statisticsPresenter.start()
 

@@ -28,9 +28,7 @@ import org.junit.Test
 import org.mockito.ArgumentCaptor
 import org.mockito.Captor
 import org.mockito.Mock
-import org.mockito.Mockito.`when`
-import org.mockito.Mockito.inOrder
-import org.mockito.Mockito.verify
+import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 
 /**
@@ -52,13 +50,15 @@ class TasksPresenterTest {
 
     private lateinit var tasks: MutableList<Task>
 
-    @Before fun setupTasksPresenter() {
+    @Before
+    fun setupTasksPresenter() {
         // Mockito has a very convenient way to inject mocks by using the @Mock annotation. To
         // inject the mocks in the test the initMocks method needs to be called.
         MockitoAnnotations.initMocks(this)
 
         // Get a reference to the class under test
-        tasksPresenter = TasksPresenter(tasksRepository, tasksView)
+        tasksPresenter = TasksPresenter(tasksRepository)
+        tasksPresenter.view = tasksView
 
         // The presenter won't update the view unless it's active.
         `when`(tasksView.isActive).thenReturn(true)
@@ -69,15 +69,8 @@ class TasksPresenterTest {
                 Task("Title3", "Description3").apply { isCompleted = true })
     }
 
-    @Test fun createPresenter_setsThePresenterToView() {
-        // Get a reference to the class under test
-        tasksPresenter = TasksPresenter(tasksRepository, tasksView)
-
-        // Then the presenter is set to the view
-        verify(tasksView).presenter = tasksPresenter
-    }
-
-    @Test fun loadAllTasksFromRepositoryAndLoadIntoView() {
+    @Test
+    fun loadAllTasksFromRepositoryAndLoadIntoView() {
         with(tasksPresenter) {
             // Given an initialized TasksPresenter with initialized tasks
             // When loading of Tasks is requested
@@ -99,7 +92,8 @@ class TasksPresenterTest {
         assertTrue(showTasksArgumentCaptor.value.size == 3)
     }
 
-    @Test fun loadActiveTasksFromRepositoryAndLoadIntoView() {
+    @Test
+    fun loadActiveTasksFromRepositoryAndLoadIntoView() {
         with(tasksPresenter) {
             // Given an initialized TasksPresenter with initialized tasks
             // When loading of Tasks is requested
@@ -118,7 +112,8 @@ class TasksPresenterTest {
         assertTrue(showTasksArgumentCaptor.value.size == 1)
     }
 
-    @Test fun loadCompletedTasksFromRepositoryAndLoadIntoView() {
+    @Test
+    fun loadCompletedTasksFromRepositoryAndLoadIntoView() {
         with(tasksPresenter) {
             // Given an initialized TasksPresenter with initialized tasks
             // When loading of Tasks is requested
@@ -137,7 +132,8 @@ class TasksPresenterTest {
         assertTrue(showTasksArgumentCaptor.value.size == 2)
     }
 
-    @Test fun clickOnFab_ShowsAddTaskUi() {
+    @Test
+    fun clickOnFab_ShowsAddTaskUi() {
         // When adding a new task
         tasksPresenter.addNewTask()
 
@@ -145,7 +141,8 @@ class TasksPresenterTest {
         verify(tasksView).showAddTask()
     }
 
-    @Test fun clickOnTask_ShowsDetailUi() {
+    @Test
+    fun clickOnTask_ShowsDetailUi() {
         // Given a stubbed active task
         val requestedTask = Task("Details Requested", "For this task")
 
@@ -156,7 +153,8 @@ class TasksPresenterTest {
         verify(tasksView).showTaskDetailsUi(any<String>())
     }
 
-    @Test fun completeTask_ShowsTaskMarkedComplete() {
+    @Test
+    fun completeTask_ShowsTaskMarkedComplete() {
         // Given a stubbed task
         val task = Task("Details Requested", "For this task")
 
@@ -168,7 +166,8 @@ class TasksPresenterTest {
         verify(tasksView).showTaskMarkedComplete()
     }
 
-    @Test fun activateTask_ShowsTaskMarkedActive() {
+    @Test
+    fun activateTask_ShowsTaskMarkedActive() {
         // Given a stubbed completed task
         val task = Task("Details Requested", "For this task").apply { isCompleted = true }
         with(tasksPresenter) {
@@ -183,7 +182,8 @@ class TasksPresenterTest {
         verify(tasksView).showTaskMarkedActive()
     }
 
-    @Test fun unavailableTasks_ShowsError() {
+    @Test
+    fun unavailableTasks_ShowsError() {
         with(tasksPresenter) {
             // When tasks are loaded
             currentFiltering = TasksFilterType.ALL_TASKS

@@ -20,7 +20,7 @@ import com.example.android.architecture.blueprints.todoapp.tasks.TasksPresenter
 import org.koin.android.AndroidModule
 
 /**
- * Created by arnaud on 06/09/2017.
+ * Koin modules
  */
 
 

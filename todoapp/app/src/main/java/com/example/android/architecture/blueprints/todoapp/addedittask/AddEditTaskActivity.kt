@@ -37,7 +37,7 @@ class AddEditTaskActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.addtask_act)
 
-        val taskId = intent.getStringExtra(AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID) ?: ""
+        val taskId: String? = intent.getStringExtra(AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID)
         getKoin().setProperty(AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID, taskId)
 
         // Set up the toolbar.
@@ -62,7 +62,7 @@ class AddEditTaskActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
-        release()
+        release(this)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

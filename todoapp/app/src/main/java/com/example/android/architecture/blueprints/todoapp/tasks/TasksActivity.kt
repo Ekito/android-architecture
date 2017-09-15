@@ -72,9 +72,9 @@ class TasksActivity : AppCompatActivity() {
         }
     }
 
-    override fun onStop() {
-        super.onStop()
-        release()
+    override fun onDestroy() {
+        super.onDestroy()
+        release(this)
     }
 
     public override fun onSaveInstanceState(outState: Bundle) {

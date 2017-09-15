@@ -29,7 +29,7 @@ import com.example.android.architecture.blueprints.todoapp.data.source.remote.Ta
 //TODO remove
 object Injection {
 
-    fun provideTasksRepository(context: Context) = TodoApplication.koinContext.get()
+    inline fun <reified T> provideTasksRepository(context: Context) = TodoApplication.koinContext.get<T>()
 
 
 //            TasksRepository.getInstance(TasksRemoteDataSource,

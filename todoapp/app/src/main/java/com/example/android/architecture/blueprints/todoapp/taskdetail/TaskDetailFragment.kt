@@ -29,7 +29,6 @@ import com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTa
 import com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskFragment
 import com.example.android.architecture.blueprints.todoapp.util.showSnackBar
 import org.koin.android.ext.android.app.inject
-import org.koin.android.ext.android.app.property
 
 /**
  * Main UI for the task detail screen.
@@ -43,8 +42,6 @@ class TaskDetailFragment : Fragment(), TaskDetailContract.View {
     private lateinit var detailCompleteStatus: CheckBox
 
     val presenter by inject<TaskDetailPresenter>()
-
-    val taskId by property<String>(TaskDetailActivity.EXTRA_TASK_ID)
 
     override var isActive: Boolean = false
         get() = isAdded

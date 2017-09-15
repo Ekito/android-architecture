@@ -53,9 +53,9 @@ class TaskDetailActivity : AppCompatActivity() {
                 }
     }
 
-    override fun onStop() {
-        super.onStop()
-        release()
+    override fun onDestroy() {
+        super.onDestroy()
+        release(this)
     }
 
     override fun onSupportNavigateUp(): Boolean {

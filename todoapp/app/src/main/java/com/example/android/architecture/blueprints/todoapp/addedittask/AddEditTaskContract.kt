@@ -24,7 +24,7 @@ import com.example.android.architecture.blueprints.todoapp.BaseView
  */
 interface AddEditTaskContract {
 
-    interface View : BaseView {
+    interface View : BaseView<Presenter> {
         var isActive: Boolean
 
         fun showEmptyTaskError()

@@ -15,6 +15,8 @@
  */
 package com.example.android.architecture.blueprints.todoapp
 
-interface BaseView {
+interface BaseView<out T : BasePresenter<*>> {
+
+    val presenter: T
 
 }

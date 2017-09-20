@@ -24,7 +24,7 @@ import com.example.android.architecture.blueprints.todoapp.data.Task
  */
 interface TasksContract {
 
-    interface View : BaseView {
+    interface View : BaseView<Presenter> {
 
         var isActive: Boolean
 

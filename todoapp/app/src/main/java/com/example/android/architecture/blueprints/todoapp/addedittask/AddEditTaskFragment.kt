@@ -34,7 +34,7 @@ import org.koin.android.ext.android.app.inject
  */
 class AddEditTaskFragment : Fragment(), AddEditTaskContract.View {
 
-    val presenter by inject<AddEditTaskContract.Presenter>()
+    override val presenter by inject<AddEditTaskContract.Presenter>()
 
     override var isActive = false
         get() = isAdded

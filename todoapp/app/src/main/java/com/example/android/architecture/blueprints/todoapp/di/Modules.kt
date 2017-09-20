@@ -20,12 +20,13 @@ import com.example.android.architecture.blueprints.todoapp.tasks.TasksPresenter
 import org.koin.android.AndroidModule
 
 /**
- * Koin modules
+ * Module list
  */
-
-
 fun moduleList() = arrayOf(RepositoryModule(), TasksActivityModule(), TaskDetailActivityModule(), StatisticsActivityModule(), AddEditTaskActivityModule())
 
+/**
+ * Koin modules
+ */
 class TasksActivityModule : AndroidModule() {
     override fun context() = declareContext {
         scope { TasksActivity::class }

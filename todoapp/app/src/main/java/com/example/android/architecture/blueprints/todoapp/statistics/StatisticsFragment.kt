@@ -32,7 +32,7 @@ class StatisticsFragment : Fragment(), StatisticsContract.View {
 
     private lateinit var statisticsTV: TextView
 
-    val presenter by inject<StatisticsContract.Presenter>()
+    override val presenter by inject<StatisticsContract.Presenter>()
 
     override val isActive: Boolean
         get() = isAdded

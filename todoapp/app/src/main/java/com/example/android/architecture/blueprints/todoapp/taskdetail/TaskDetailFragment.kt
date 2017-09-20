@@ -41,7 +41,7 @@ class TaskDetailFragment : Fragment(), TaskDetailContract.View {
 
     private lateinit var detailCompleteStatus: CheckBox
 
-    val presenter by inject<TaskDetailPresenter>()
+    override val presenter by inject<TaskDetailPresenter>()
 
     override var isActive: Boolean = false
         get() = isAdded

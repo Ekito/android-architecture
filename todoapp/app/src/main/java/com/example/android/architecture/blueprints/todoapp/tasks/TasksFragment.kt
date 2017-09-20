@@ -38,7 +38,7 @@ import java.util.*
  */
 class TasksFragment : Fragment(), TasksContract.View {
 
-    val presenter by inject<TasksPresenter>()
+    override val presenter by inject<TasksPresenter>()
 
     override var isActive: Boolean = false
         get() = isAdded

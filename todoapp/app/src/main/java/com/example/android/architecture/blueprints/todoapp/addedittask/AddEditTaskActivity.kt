@@ -60,8 +60,8 @@ class AddEditTaskActivity : AppCompatActivity() {
         getKoin().setProperty(SHOULD_LOAD_DATA_FROM_REPO_KEY, shouldLoadDataFromRepo)
     }
 
-    override fun onStop() {
-        super.onStop()
+    override fun onDestroy() {
+        super.onDestroy()
         release(this)
     }
 

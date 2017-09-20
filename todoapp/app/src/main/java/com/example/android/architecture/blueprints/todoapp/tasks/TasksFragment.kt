@@ -31,6 +31,7 @@ import com.example.android.architecture.blueprints.todoapp.data.Task
 import com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailActivity
 import com.example.android.architecture.blueprints.todoapp.util.showSnackBar
 import org.koin.android.ext.android.app.inject
+import org.koin.android.ext.android.app.release
 import java.util.*
 
 /**
@@ -73,6 +74,11 @@ class TasksFragment : Fragment(), TasksContract.View {
         super.onResume()
         presenter.view = this
         presenter.start()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        release(activity)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

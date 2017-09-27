@@ -24,7 +24,7 @@ import com.example.android.architecture.blueprints.todoapp.data.Task
  */
 interface TasksContract {
 
-    interface View : BaseView<TasksContract.Presenter> {
+    interface View : BaseView<Presenter> {
 
         var isActive: Boolean
 
@@ -61,7 +61,7 @@ interface TasksContract {
         fun showFilteringPopUpMenu()
     }
 
-    interface Presenter : BasePresenter<TasksContract.View> {
+    interface Presenter : BasePresenter<View> {
 
         var currentFiltering: TasksFilterType
 

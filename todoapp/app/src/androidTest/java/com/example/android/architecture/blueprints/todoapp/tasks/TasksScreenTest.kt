@@ -37,7 +37,6 @@ import android.support.test.filters.LargeTest
 import android.support.test.filters.SdkSuppress
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
-import android.text.TextUtils
 import android.view.View
 import android.widget.ListView
 import com.example.android.architecture.blueprints.todoapp.Injection

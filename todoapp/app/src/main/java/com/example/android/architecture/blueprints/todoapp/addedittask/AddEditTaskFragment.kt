@@ -28,6 +28,7 @@ import android.widget.TextView
 import com.example.android.architecture.blueprints.todoapp.R
 import com.example.android.architecture.blueprints.todoapp.util.showSnackBar
 import org.koin.android.ext.android.app.inject
+import org.koin.android.ext.android.app.release
 
 /**
  * Main UI for the add task screen. Users can enter a task title and description.
@@ -47,6 +48,13 @@ class AddEditTaskFragment : Fragment(), AddEditTaskContract.View {
         super.onResume()
         presenter.view = this
         presenter.start()
+    }
+
+    //FIXME Bug here
+
+    override fun onDestroy() {
+        super.onDestroy()
+        release(activity)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

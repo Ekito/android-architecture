@@ -31,7 +31,7 @@ class TasksActivityModule : AndroidModule() {
     override fun context() = declareContext {
         scope { TasksActivity::class }
         provide { TasksFragment() }
-        provide { TasksPresenter(get()) } bind { TasksContract.Presenter::class }
+        provide(bind = TasksContract.Presenter::class) { TasksPresenter(get()) }
     }
 }
 
@@ -39,7 +39,7 @@ class TaskDetailActivityModule : AndroidModule() {
     override fun context() = declareContext {
         scope { TaskDetailActivity::class }
         provide { TaskDetailFragment() }
-        provide { TaskDetailPresenter(getProperty(TaskDetailActivity.EXTRA_TASK_ID), get()) } bind { TaskDetailContract.Presenter::class }
+        provide(bind = TaskDetailContract.Presenter::class) { TaskDetailPresenter(getProperty(TaskDetailActivity.EXTRA_TASK_ID), get()) }
     }
 }
 
@@ -47,7 +47,7 @@ class StatisticsActivityModule : AndroidModule() {
     override fun context() = declareContext {
         scope { StatisticsActivity::class }
         provide { StatisticsFragment() }
-        provide { StatisticsPresenter(get()) } bind { StatisticsContract.Presenter::class }
+        provide(bind = StatisticsContract.Presenter::class) { StatisticsPresenter(get()) }
     }
 }
 
@@ -55,6 +55,6 @@ class AddEditTaskActivityModule : AndroidModule() {
     override fun context() = declareContext {
         scope { AddEditTaskActivity::class }
         provide { AddEditTaskFragment() }
-        provide { AddEditTaskPresenter(getProperty(AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID), get(), getProperty(AddEditTaskActivity.SHOULD_LOAD_DATA_FROM_REPO_KEY)) } bind { AddEditTaskContract.Presenter::class }
+        provide(bind = AddEditTaskContract.Presenter::class) { AddEditTaskPresenter(getProperty(AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID), get(), getProperty(AddEditTaskActivity.SHOULD_LOAD_DATA_FROM_REPO_KEY)) }
     }
 }

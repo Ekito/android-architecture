@@ -53,11 +53,6 @@ class TaskDetailActivity : AppCompatActivity() {
                 }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        release(this)
-    }
-
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true

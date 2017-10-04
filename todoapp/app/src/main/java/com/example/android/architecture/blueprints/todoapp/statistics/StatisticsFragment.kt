@@ -24,6 +24,7 @@ import android.widget.TextView
 
 import com.example.android.architecture.blueprints.todoapp.R
 import org.koin.android.ext.android.app.inject
+import org.koin.android.ext.android.app.release
 
 /**
  * Main UI for the statistics screen.
@@ -48,6 +49,11 @@ class StatisticsFragment : Fragment(), StatisticsContract.View {
         super.onResume()
         presenter.view = this
         presenter.start()
+    }
+
+    override fun onPause() {
+        release(activity)
+        super.onPause()
     }
 
     override fun setProgressIndicator(active: Boolean) {

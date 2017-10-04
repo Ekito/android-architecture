@@ -29,6 +29,7 @@ import com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTa
 import com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskFragment
 import com.example.android.architecture.blueprints.todoapp.util.showSnackBar
 import org.koin.android.ext.android.app.inject
+import org.koin.android.ext.android.app.release
 
 /**
  * Main UI for the task detail screen.
@@ -50,6 +51,11 @@ class TaskDetailFragment : Fragment(), TaskDetailContract.View {
         super.onResume()
         presenter.view = this
         presenter.start()
+    }
+
+    override fun onPause() {
+        release(activity)
+        super.onPause()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

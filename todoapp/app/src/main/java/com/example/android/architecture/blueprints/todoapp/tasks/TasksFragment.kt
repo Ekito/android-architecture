@@ -76,9 +76,9 @@ class TasksFragment : Fragment(), TasksContract.View {
         presenter.start()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onPause() {
         release(activity)
+        super.onPause()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

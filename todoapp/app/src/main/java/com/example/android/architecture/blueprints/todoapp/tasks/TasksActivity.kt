@@ -72,11 +72,6 @@ class TasksActivity : AppCompatActivity() {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        release(this)
-    }
-
     public override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState.apply {
             putSerializable(CURRENT_FILTERING_KEY, tasksPresenter.currentFiltering)

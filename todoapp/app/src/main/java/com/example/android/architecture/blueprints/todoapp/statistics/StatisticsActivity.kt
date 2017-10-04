@@ -63,11 +63,6 @@ class StatisticsActivity : AppCompatActivity() {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        release(this)
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             // Open the navigation drawer when the home icon is selected from the toolbar.

@@ -52,9 +52,9 @@ class AddEditTaskFragment : Fragment(), AddEditTaskContract.View {
 
     //FIXME Bug here
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onPause() {
         release(activity)
+        super.onPause()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

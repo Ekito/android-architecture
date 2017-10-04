@@ -50,8 +50,6 @@ class AddEditTaskFragment : Fragment(), AddEditTaskContract.View {
         presenter.start()
     }
 
-    //FIXME Bug here
-
     override fun onPause() {
         release(activity)
         super.onPause()

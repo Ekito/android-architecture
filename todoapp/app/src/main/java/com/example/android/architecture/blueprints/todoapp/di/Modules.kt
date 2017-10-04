@@ -23,7 +23,7 @@ import org.koin.android.AndroidModule
  * Koin modules
  */
 
-fun moduleList() = arrayListOf(RepositoryModule(), TasksActivityModule(), TaskDetailActivityModule(), StatisticsActivityModule(), AddEditTaskActivityModule())
+fun moduleList() = listOf(RepositoryModule(), TasksActivityModule(), TaskDetailActivityModule(), StatisticsActivityModule(), AddEditTaskActivityModule())
 
 class TasksActivityModule : AndroidModule() {
     override fun context() = declareContext {

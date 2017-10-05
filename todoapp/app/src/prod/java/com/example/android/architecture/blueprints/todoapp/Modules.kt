@@ -11,6 +11,6 @@ class RepositoryModule : AndroidModule() {
         provide("remoteDataSource") { TasksRemoteDataSource() }
         provide("localDataSource") { TasksLocalDataSource(applicationContext) }
 
-        provide(bind = TasksDataSource::class) { TasksRepository(get("remoteDataSource"), get("localDataSource")) }
+        provide { TasksRepository(get("remoteDataSource"), get("localDataSource")) } bind (TasksDataSource::class)
     }
 }

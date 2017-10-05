@@ -28,33 +28,29 @@ fun moduleList() = listOf(RepositoryModule(), TasksActivityModule(), TaskDetailA
  * Koin modules
  */
 class TasksActivityModule : AndroidModule() {
-    override fun context() = declareContext {
-        scope { TasksActivity::class }
+    override fun context() = declareContext(scope = TasksActivity::class) {
         provide { TasksFragment() }
-        provide { TasksPresenter(get()) } bind { TasksContract.Presenter::class }
+        provide { TasksPresenter(get()) } bind (TasksContract.Presenter::class)
     }
 }
 
 class TaskDetailActivityModule : AndroidModule() {
-    override fun context() = declareContext {
-        scope { TaskDetailActivity::class }
+    override fun context() = declareContext(scope = TaskDetailActivity::class) {
         provide { TaskDetailFragment() }
-        provide { TaskDetailPresenter(getProperty(TaskDetailActivity.EXTRA_TASK_ID), get()) } bind { TaskDetailContract.Presenter::class }
+        provide { TaskDetailPresenter(getProperty(TaskDetailActivity.EXTRA_TASK_ID), get()) } bind (TaskDetailContract.Presenter::class)
     }
 }
 
 class StatisticsActivityModule : AndroidModule() {
-    override fun context() = declareContext {
-        scope { StatisticsActivity::class }
+    override fun context() = declareContext(scope = StatisticsActivity::class) {
         provide { StatisticsFragment() }
-        provide { StatisticsPresenter(get()) } bind { StatisticsContract.Presenter::class }
+        provide { StatisticsPresenter(get()) } bind (StatisticsContract.Presenter::class)
     }
 }
 
 class AddEditTaskActivityModule : AndroidModule() {
-    override fun context() = declareContext {
-        scope { AddEditTaskActivity::class }
+    override fun context() = declareContext(scope = AddEditTaskActivity::class) {
         provide { AddEditTaskFragment() }
-        provide { AddEditTaskPresenter(getProperty(AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID), get(), getProperty(AddEditTaskActivity.SHOULD_LOAD_DATA_FROM_REPO_KEY)) } bind { AddEditTaskContract.Presenter::class }
+        provide { AddEditTaskPresenter(getProperty(AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID), get(), getProperty(AddEditTaskActivity.SHOULD_LOAD_DATA_FROM_REPO_KEY)) } bind (AddEditTaskContract.Presenter::class)
     }
 }

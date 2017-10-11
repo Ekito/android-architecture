@@ -23,7 +23,6 @@ import com.example.android.architecture.blueprints.todoapp.util.replaceFragmentI
 import com.example.android.architecture.blueprints.todoapp.util.setupActionBar
 import org.koin.android.ext.android.app.getKoin
 import org.koin.android.ext.android.app.inject
-import org.koin.android.ext.android.app.release
 
 /**
  * Displays an add or edit task screen.
@@ -58,11 +57,6 @@ class AddEditTaskActivity : AppCompatActivity() {
                 savedInstanceState?.getBoolean(SHOULD_LOAD_DATA_FROM_REPO_KEY) ?: true
 
         getKoin().setProperty(SHOULD_LOAD_DATA_FROM_REPO_KEY, shouldLoadDataFromRepo)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        release(this)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

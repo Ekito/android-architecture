@@ -7,7 +7,7 @@ import com.example.android.architecture.blueprints.todoapp.data.source.remote.Ta
 import org.koin.android.AndroidModule
 
 class RepositoryModule : AndroidModule() {
-    override fun context() = declareContext {
+    override fun context() = applicationContext {
         provide("remoteDataSource") { TasksRemoteDataSource() }
         provide("localDataSource") { TasksLocalDataSource(applicationContext) }
 

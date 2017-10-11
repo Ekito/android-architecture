@@ -23,6 +23,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 
 import com.example.android.architecture.blueprints.todoapp.R
+import com.example.android.architecture.blueprints.todoapp.di.TodoAppModule
 import org.koin.android.ext.android.app.inject
 import org.koin.android.ext.android.app.release
 
@@ -39,7 +40,7 @@ class StatisticsFragment : Fragment(), StatisticsContract.View {
         get() = isAdded
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.statistics_frag, container, false)
         statisticsTV = root.findViewById(R.id.statistics)
         return root
@@ -52,7 +53,7 @@ class StatisticsFragment : Fragment(), StatisticsContract.View {
     }
 
     override fun onPause() {
-        release(activity)
+        release(TodoAppModule.CTX_Statistics)
         super.onPause()
     }
 

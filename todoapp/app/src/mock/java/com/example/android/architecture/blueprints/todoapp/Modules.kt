@@ -10,7 +10,7 @@ import org.koin.android.AndroidModule
  * Created by arnaud on 06/09/2017.
  */
 class RepositoryModule : AndroidModule() {
-    override fun context() = declareContext {
+    override fun context() = applicationContext {
         provide("remoteDataSource") { FakeTasksRemoteDataSource() }
         provide("localDataSource") { TasksLocalDataSource(applicationContext) }
 

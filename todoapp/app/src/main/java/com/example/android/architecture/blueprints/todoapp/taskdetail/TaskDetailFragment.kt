@@ -27,7 +27,7 @@ import android.widget.TextView
 import com.example.android.architecture.blueprints.todoapp.R
 import com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskActivity
 import com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskFragment
-import com.example.android.architecture.blueprints.todoapp.di.TodoAppModule
+import com.example.android.architecture.blueprints.todoapp.di.Context
 import com.example.android.architecture.blueprints.todoapp.util.showSnackBar
 import org.koin.android.ext.android.app.inject
 import org.koin.android.ext.android.app.release
@@ -55,7 +55,7 @@ class TaskDetailFragment : Fragment(), TaskDetailContract.View {
     }
 
     override fun onPause() {
-        release(TodoAppModule.CTX_TaskDetail)
+        release(Context.TaskDetail)
         super.onPause()
     }
 

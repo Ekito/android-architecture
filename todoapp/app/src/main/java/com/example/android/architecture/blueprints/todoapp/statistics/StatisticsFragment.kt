@@ -21,9 +21,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-
 import com.example.android.architecture.blueprints.todoapp.R
-import com.example.android.architecture.blueprints.todoapp.di.TodoAppModule
+import com.example.android.architecture.blueprints.todoapp.di.Context
 import org.koin.android.ext.android.app.inject
 import org.koin.android.ext.android.app.release
 
@@ -53,7 +52,7 @@ class StatisticsFragment : Fragment(), StatisticsContract.View {
     }
 
     override fun onPause() {
-        release(TodoAppModule.CTX_Statistics)
+        release(Context.Statistics)
         super.onPause()
     }
 

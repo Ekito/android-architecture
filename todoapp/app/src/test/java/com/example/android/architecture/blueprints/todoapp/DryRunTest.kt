@@ -11,13 +11,13 @@ import org.koin.android.init
 import org.mockito.Mockito
 
 /**
- * Test Dry run / Koin Modules
+ * Test Dry run / Koin Context
  */
 class DryRunTest {
     @Test
     fun todoAppModuleDryRun() {
         Koin().init(Mockito.mock(Application::class.java))
-                // some default values
+                // bootstrap with default values
                 .properties(mapOf(TaskDetailActivity.EXTRA_TASK_ID to "", AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID to "", AddEditTaskActivity.SHOULD_LOAD_DATA_FROM_REPO_KEY to false))
                 .build(moduleList()).dryRun()
     }

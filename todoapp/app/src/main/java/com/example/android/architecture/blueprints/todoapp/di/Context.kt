@@ -5,6 +5,10 @@ import com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTa
 import com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskContract
 import com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskFragment
 import com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskPresenter
+import com.example.android.architecture.blueprints.todoapp.di.Context.AddEditTask
+import com.example.android.architecture.blueprints.todoapp.di.Context.Statistics
+import com.example.android.architecture.blueprints.todoapp.di.Context.TaskDetail
+import com.example.android.architecture.blueprints.todoapp.di.Context.Tasks
 import com.example.android.architecture.blueprints.todoapp.statistics.StatisticsContract
 import com.example.android.architecture.blueprints.todoapp.statistics.StatisticsFragment
 import com.example.android.architecture.blueprints.todoapp.statistics.StatisticsPresenter
@@ -23,36 +27,38 @@ import org.koin.android.AndroidModule
 fun moduleList() = listOf(RepositoryModule(), TodoAppModule())
 
 /**
- * Koin modules
+ * Koin module
  */
 class TodoAppModule : AndroidModule() {
     override fun context() = applicationContext {
-        context(CTX_Tasks) {
+        context(Tasks) {
             provide { TasksFragment() }
             provide { TasksPresenter(get()) } bind (TasksContract.Presenter::class)
         }
 
-        context(CTX_TaskDetail) {
+        context(TaskDetail) {
             provide { TaskDetailFragment() }
             provide { TaskDetailPresenter(getProperty(TaskDetailActivity.EXTRA_TASK_ID), get()) } bind (TaskDetailContract.Presenter::class)
         }
 
-        context(CTX_Statistics) {
+        context(Statistics) {
             provide { StatisticsFragment() }
             provide { StatisticsPresenter(get()) } bind (StatisticsContract.Presenter::class)
         }
 
-        context(CTX_AddEditTask) {
+        context(AddEditTask) {
             provide { AddEditTaskFragment() }
             provide { AddEditTaskPresenter(getProperty(AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID), get(), getProperty(AddEditTaskActivity.SHOULD_LOAD_DATA_FROM_REPO_KEY)) } bind (AddEditTaskContract.Presenter::class)
         }
     }
+}
 
-    companion object {
-        val CTX_Tasks = "CTX_Tasks"
-        val CTX_TaskDetail = "CTX_TaskDetail"
-        val CTX_Statistics = "CTX_Statistics"
-        val CTX_AddEditTask = "CTX_AddEditTask"
-
-    }
+/**
+ * Module constants
+ */
+object Context {
+    val Tasks = "Tasks"
+    val TaskDetail = "TaskDetail"
+    val Statistics = "Statistics"
+    val AddEditTask = "AddEditTask"
 }

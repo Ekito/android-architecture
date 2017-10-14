@@ -33,22 +33,22 @@ class TodoAppModule : AndroidModule() {
     override fun context() = applicationContext {
         context(Tasks) {
             provide { TasksFragment() }
-            provide { TasksPresenter(get()) } bind (TasksContract.Presenter::class)
+            provide { TasksPresenter(get()) } bind TasksContract.Presenter::class
         }
 
         context(TaskDetail) {
             provide { TaskDetailFragment() }
-            provide { TaskDetailPresenter(getProperty(TaskDetailActivity.EXTRA_TASK_ID), get()) } bind (TaskDetailContract.Presenter::class)
+            provide { TaskDetailPresenter(getProperty(TaskDetailActivity.EXTRA_TASK_ID), get()) } bind TaskDetailContract.Presenter::class
         }
 
         context(Statistics) {
             provide { StatisticsFragment() }
-            provide { StatisticsPresenter(get()) } bind (StatisticsContract.Presenter::class)
+            provide { StatisticsPresenter(get()) } bind StatisticsContract.Presenter::class
         }
 
         context(AddEditTask) {
             provide { AddEditTaskFragment() }
-            provide { AddEditTaskPresenter(getProperty(AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID), get(), getProperty(AddEditTaskActivity.SHOULD_LOAD_DATA_FROM_REPO_KEY)) } bind (AddEditTaskContract.Presenter::class)
+            provide { AddEditTaskPresenter(getProperty(AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID), get(), getProperty(AddEditTaskActivity.SHOULD_LOAD_DATA_FROM_REPO_KEY)) } bind AddEditTaskContract.Presenter::class
         }
     }
 }

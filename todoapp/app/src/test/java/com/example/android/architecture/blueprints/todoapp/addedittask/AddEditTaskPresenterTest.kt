@@ -50,7 +50,8 @@ class AddEditTaskPresenterTest {
 
     private lateinit var addEditTaskPresenter: AddEditTaskPresenter
 
-    @Before fun setupMocksAndView() {
+    @Before
+    fun setupMocksAndView() {
         // Mockito has a very convenient way to inject mocks by using the @Mock annotation. To
         // inject the mocks in the test the initMocks method needs to be called.
         MockitoAnnotations.initMocks(this)
@@ -59,10 +60,10 @@ class AddEditTaskPresenterTest {
         `when`(addEditTaskView.isActive).thenReturn(true)
     }
 
-    @Test fun saveNewTaskToRepository_showsSuccessMessageUi() {
+    @Test
+    fun saveNewTaskToRepository_showsSuccessMessageUi() {
         // Get a reference to the class under test
-//        addEditTaskPresenter = AddEditTaskPresenter(null, tasksRepository, addEditTaskView, true)
-        addEditTaskPresenter = AddEditTaskPresenter(null, tasksRepository, true)
+        addEditTaskPresenter = AddEditTaskPresenter("", tasksRepository, true)
         addEditTaskPresenter.view = addEditTaskView
 
         // When the presenter is asked to save a task
@@ -73,10 +74,10 @@ class AddEditTaskPresenterTest {
         verify(addEditTaskView).showTasksList() // shown in the UI
     }
 
-    @Test fun saveTask_emptyTaskShowsErrorUi() {
+    @Test
+    fun saveTask_emptyTaskShowsErrorUi() {
         // Get a reference to the class under test
-//        addEditTaskPresenter = AddEditTaskPresenter(null, tasksRepository, addEditTaskView, true)
-        addEditTaskPresenter = AddEditTaskPresenter(null, tasksRepository, true)
+        addEditTaskPresenter = AddEditTaskPresenter("", tasksRepository, true)
         addEditTaskPresenter.view = addEditTaskView
 
         // When the presenter is asked to save an empty task
@@ -86,7 +87,8 @@ class AddEditTaskPresenterTest {
         verify(addEditTaskView).showEmptyTaskError()
     }
 
-    @Test fun saveExistingTaskToRepository_showsSuccessMessageUi() {
+    @Test
+    fun saveExistingTaskToRepository_showsSuccessMessageUi() {
         // Get a reference to the class under test
 //        addEditTaskPresenter = AddEditTaskPresenter(
 //                "1", tasksRepository, addEditTaskView, true)
@@ -101,7 +103,8 @@ class AddEditTaskPresenterTest {
         verify(addEditTaskView).showTasksList() // shown in the UI
     }
 
-    @Test fun populateTask_callsRepoAndUpdatesView() {
+    @Test
+    fun populateTask_callsRepoAndUpdatesView() {
         val testTask = Task("TITLE", "DESCRIPTION")
         // Get a reference to the class under test
         addEditTaskPresenter = AddEditTaskPresenter(testTask.id, tasksRepository, true)

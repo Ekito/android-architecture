@@ -16,30 +16,37 @@
 package com.example.android.architecture.blueprints.todoapp.taskdetail
 
 import android.app.Activity
+import android.app.Application
 import android.content.Intent
+import android.support.test.InstrumentationRegistry
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.assertion.ViewAssertions.matches
-import android.support.test.espresso.matcher.ViewMatchers.isChecked
-import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
-import android.support.test.espresso.matcher.ViewMatchers.withId
-import android.support.test.espresso.matcher.ViewMatchers.withText
+import android.support.test.espresso.matcher.ViewMatchers.*
 import android.support.test.filters.LargeTest
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import com.example.android.architecture.blueprints.todoapp.R
+import com.example.android.architecture.blueprints.todoapp.RepositoryModule
 import com.example.android.architecture.blueprints.todoapp.TestUtils
 import com.example.android.architecture.blueprints.todoapp.data.FakeTasksRemoteDataSource
 import com.example.android.architecture.blueprints.todoapp.data.Task
-import com.example.android.architecture.blueprints.todoapp.data.source.TasksRepository
+import com.example.android.architecture.blueprints.todoapp.di.TodoAppModule
 import org.hamcrest.core.IsNot.not
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.koin.Koin
+import org.koin.KoinContext
+import org.koin.android.init
+import org.mockito.Mockito
 
 /**
  * Tests for the tasks screen, the main screen which contains a list of all tasks.
  */
-@RunWith(AndroidJUnit4::class) @LargeTest class TaskDetailScreenTest {
+@RunWith(AndroidJUnit4::class)
+@LargeTest
+class TaskDetailScreenTest {
 
     private val TASK_TITLE = "ATSL"
 
@@ -69,7 +76,9 @@ import org.junit.runner.RunWith
      * from the source Activity. ActivityTestRule has a feature which let's you lazily start the
      * Activity under test, so you can control the Intent that is used to start the target Activity.
      */
-    @Rule @JvmField var taskDetailActivityTestRule =
+    @Rule
+    @JvmField
+    var taskDetailActivityTestRule =
             ActivityTestRule(TaskDetailActivity::class.java, /* Initial touch mode  */ true,
                     /* Lazily launch activity */ false)
 
@@ -79,6 +88,17 @@ import org.junit.runner.RunWith
 
     private fun loadCompletedTask() {
         startActivityWithWithStubbedTask(COMPLETED_TASK)
+    }
+
+    /**
+     * Koin context
+     */
+    lateinit var koinContext: KoinContext
+
+    @Before
+    fun before() {
+        // init modules
+        koinContext = Koin().init(InstrumentationRegistry.getTargetContext().applicationContext as Application).build(RepositoryModule(),TodoAppModule())
     }
 
     /**
@@ -93,15 +113,17 @@ import org.junit.runner.RunWith
      */
     private fun startActivityWithWithStubbedTask(task: Task) {
         // Add a task stub to the fake service api layer.
-        TasksRepository.destroyInstance()
-        FakeTasksRemoteDataSource.getInstance().addTasks(task)
+//        TasksRepository.destroyInstance()
+
+        koinContext.get<FakeTasksRemoteDataSource>().addTasks(task)
 
         // Lazily start the Activity from the ActivityTestRule this time to inject the start Intent
         val startIntent = Intent().apply { putExtra(TaskDetailActivity.EXTRA_TASK_ID, task.id) }
         taskDetailActivityTestRule.launchActivity(startIntent)
     }
 
-    @Test fun activeTaskDetails_DisplayedInUi() {
+    @Test
+    fun activeTaskDetails_DisplayedInUi() {
         loadActiveTask()
 
         // Check that the task title and description are displayed
@@ -110,7 +132,8 @@ import org.junit.runner.RunWith
         onView(withId(R.id.task_detail_complete)).check(matches(not(isChecked())))
     }
 
-    @Test fun completedTaskDetails_DisplayedInUi() {
+    @Test
+    fun completedTaskDetails_DisplayedInUi() {
         loadCompletedTask()
 
         // Check that the task title and description are displayed
@@ -119,7 +142,8 @@ import org.junit.runner.RunWith
         onView(withId(R.id.task_detail_complete)).check(matches(isChecked()))
     }
 
-    @Test fun orientationChange_menuAndTaskPersist() {
+    @Test
+    fun orientationChange_menuAndTaskPersist() {
         loadActiveTask()
 
         // Check delete menu item is displayed and is unique

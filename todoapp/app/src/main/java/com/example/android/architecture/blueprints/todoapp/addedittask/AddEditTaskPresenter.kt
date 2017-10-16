@@ -31,7 +31,7 @@ import com.example.android.architecture.blueprints.todoapp.data.source.TasksData
  * @param isDataMissing whether data needs to be loaded or not (for config changes)
  */
 class AddEditTaskPresenter(
-        private val taskId: String?,
+        private val taskId: String,
         val tasksRepository: TasksDataSource,
         override var isDataMissing: Boolean
 ) : AddEditTaskContract.Presenter, TasksDataSource.GetTaskCallback {
@@ -39,13 +39,13 @@ class AddEditTaskPresenter(
     override lateinit var view: AddEditTaskContract.View
 
     override fun start() {
-        if (taskId != null && isDataMissing) {
+        if (taskId.isNotEmpty() && isDataMissing) {
             populateTask()
         }
     }
 
     override fun saveTask(title: String, description: String) {
-        if (taskId == null) {
+        if (taskId.isEmpty()) {
             createTask(title, description)
         } else {
             updateTask(title, description)
@@ -53,7 +53,7 @@ class AddEditTaskPresenter(
     }
 
     override fun populateTask() {
-        if (taskId == null) {
+        if (taskId.isEmpty()) {
             throw RuntimeException("populateTask() was called but task is new.")
         }
         tasksRepository.getTask(taskId, this)
@@ -86,7 +86,7 @@ class AddEditTaskPresenter(
     }
 
     private fun updateTask(title: String, description: String) {
-        if (taskId == null) {
+        if (taskId.isEmpty()) {
             throw RuntimeException("updateTask() was called but task is new.")
         }
         tasksRepository.saveTask(Task(title, description, taskId))

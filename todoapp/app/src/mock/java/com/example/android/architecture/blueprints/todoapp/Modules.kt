@@ -7,7 +7,7 @@ import com.example.android.architecture.blueprints.todoapp.data.source.local.Tas
 import org.koin.android.AndroidModule
 
 /**
- * Created by arnaud on 06/09/2017.
+ * Repository module
  */
 class RepositoryModule : AndroidModule() {
     override fun context() = applicationContext {

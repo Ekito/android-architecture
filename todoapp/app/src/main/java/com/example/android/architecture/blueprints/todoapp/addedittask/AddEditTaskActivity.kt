@@ -37,7 +37,7 @@ class AddEditTaskActivity : AppCompatActivity() {
         setContentView(R.layout.addtask_act)
 
         val taskId: String? = intent.getStringExtra(AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID)
-        getKoin().setProperty(AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID, taskId)
+        getKoin().setProperty(AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID, taskId ?: "")
 
         // Set up the toolbar.
         setupActionBar(R.id.toolbar) {

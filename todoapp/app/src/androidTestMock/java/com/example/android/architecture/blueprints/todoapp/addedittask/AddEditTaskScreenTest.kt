@@ -16,6 +16,7 @@
 
 package com.example.android.architecture.blueprints.todoapp.addedittask
 
+import android.app.Application
 import android.content.Intent
 import android.content.res.Resources
 import android.support.test.InstrumentationRegistry
@@ -34,19 +35,27 @@ import android.support.v7.widget.Toolbar
 import android.view.View
 import com.example.android.architecture.blueprints.todoapp.R
 import com.example.android.architecture.blueprints.todoapp.R.id.toolbar
+import com.example.android.architecture.blueprints.todoapp.RepositoryModule
 import com.example.android.architecture.blueprints.todoapp.TestUtils
 import com.example.android.architecture.blueprints.todoapp.data.FakeTasksRemoteDataSource
 import com.example.android.architecture.blueprints.todoapp.data.Task
-import com.example.android.architecture.blueprints.todoapp.data.source.TasksRepository
+import com.example.android.architecture.blueprints.todoapp.di.TodoAppModule
 import org.hamcrest.Description
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.koin.Koin
+import org.koin.KoinContext
+import org.koin.android.init
+import org.mockito.Mockito.mock
 
 /**
  * Tests for the add task screen.
  */
-@RunWith(AndroidJUnit4::class) @LargeTest class AddEditTaskScreenTest {
+@RunWith(AndroidJUnit4::class)
+@LargeTest
+class AddEditTaskScreenTest {
 
     /**
      * [IntentsTestRule] is an [ActivityTestRule] which inits and releases Espresso
@@ -57,12 +66,26 @@ import org.junit.runner.RunWith
      * Rules are interceptors which are executed for each test method and are important building
      * blocks of Junit tests.
      */
-    @Rule @JvmField var activityTestRule = ActivityTestRule(AddEditTaskActivity::class.java,
+    @Rule
+    @JvmField
+    var activityTestRule = ActivityTestRule(AddEditTaskActivity::class.java,
             false, false)
 
-    @Test fun emptyTask_isNotSaved() {
+    /**
+     * Koin context
+     */
+    lateinit var koinContext: KoinContext
+
+    @Before
+    fun before() {
+        // init modules
+        koinContext = Koin().init(InstrumentationRegistry.getTargetContext().applicationContext as Application).build(RepositoryModule(), TodoAppModule())
+    }
+
+    @Test
+    fun emptyTask_isNotSaved() {
         // Launch activity to add a new task
-        launchNewTaskActivity(null)
+        launchNewTaskActivity("")
 
         // Add invalid title and description combination
         onView(withId(R.id.add_task_title)).perform(clearText())
@@ -74,9 +97,10 @@ import org.junit.runner.RunWith
         onView(withId(R.id.add_task_title)).check(matches(isDisplayed()))
     }
 
-    @Test fun toolbarTitle_newTask_persistsRotation() {
+    @Test
+    fun toolbarTitle_newTask_persistsRotation() {
         // Launch activity to add a new task
-        launchNewTaskActivity(null)
+        launchNewTaskActivity("")
 
         // Check that the toolbar shows the correct title
         onView(withId(toolbar)).check(matches(withToolbarTitle(R.string.add_task)))
@@ -88,10 +112,11 @@ import org.junit.runner.RunWith
         onView(withId(toolbar)).check(matches(withToolbarTitle(R.string.add_task)))
     }
 
-    @Test fun toolbarTitle_editTask_persistsRotation() {
+    @Test
+    fun toolbarTitle_editTask_persistsRotation() {
         // Put a task in the repository and start the activity to edit it
-        TasksRepository.destroyInstance()
-        FakeTasksRemoteDataSource.getInstance().addTasks(Task("Title1", "", TASK_ID).apply {
+//        TasksRepository.destroyInstance()
+        koinContext.get<FakeTasksRemoteDataSource>().addTasks(Task("Title1", "", TASK_ID).apply {
             isCompleted = false
         })
         launchNewTaskActivity(TASK_ID)
@@ -109,7 +134,7 @@ import org.junit.runner.RunWith
     /**
      * @param taskId is null if used to add a new task, otherwise it edits the task.
      */
-    private fun launchNewTaskActivity(taskId: String?) {
+    private fun launchNewTaskActivity(taskId: String) {
         val intent = Intent(InstrumentationRegistry.getInstrumentation()
                 .targetContext, AddEditTaskActivity::class.java)
                 .apply {

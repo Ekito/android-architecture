@@ -1,4 +1,4 @@
-# todo-mvp-kotlin
+# todo-mvp-kotlin-koin
 
 This version of the app is called todo-mvp-kotlin, and provides a foundation for other kotlin samples in this project. The sample aims to:
 
@@ -19,6 +19,11 @@ This sample is a work in progress.
 ### Complexity - understandability
 
 Medium: If you already understand TODO-MVP (Java), you need to [learn](http://kotlinlang.org/docs/reference/) the kotlin language.
+
+
+### Koin framework
+
+Pure Kotlin Dependency injection framework - make DI easy: https://github.com/Ekito/koin
 
 ### Testability
 

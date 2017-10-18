@@ -20,5 +20,4 @@ class TodoApplication : Application() {
         LeakCanary.install(this)
         newKoinContext(this, moduleList())
     }
-
 }

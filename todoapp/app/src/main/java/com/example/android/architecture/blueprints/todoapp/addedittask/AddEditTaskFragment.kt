@@ -28,15 +28,15 @@ import android.widget.TextView
 import com.example.android.architecture.blueprints.todoapp.R
 import com.example.android.architecture.blueprints.todoapp.di.Context
 import com.example.android.architecture.blueprints.todoapp.util.showSnackBar
-import org.koin.android.ext.android.app.inject
-import org.koin.android.ext.android.app.release
+import org.koin.standalone.inject
+import org.koin.standalone.releaseContext
 
 /**
  * Main UI for the add task screen. Users can enter a task title and description.
  */
 class AddEditTaskFragment : Fragment(), AddEditTaskContract.View {
 
-    override val presenter by inject<AddEditTaskContract.Presenter>()
+    override val presenter: AddEditTaskContract.Presenter by inject()
 
     override var isActive = false
         get() = isAdded
@@ -52,7 +52,7 @@ class AddEditTaskFragment : Fragment(), AddEditTaskContract.View {
     }
 
     override fun onPause() {
-        release(Context.AddEditTask)
+        releaseContext(Context.AddEditTask)
         super.onPause()
     }
 

@@ -29,8 +29,7 @@ import com.example.android.architecture.blueprints.todoapp.statistics.Statistics
 import com.example.android.architecture.blueprints.todoapp.util.EspressoIdlingResource
 import com.example.android.architecture.blueprints.todoapp.util.replaceFragmentInActivity
 import com.example.android.architecture.blueprints.todoapp.util.setupActionBar
-import org.koin.android.ext.android.app.inject
-import org.koin.android.ext.android.app.release
+import org.koin.standalone.inject
 
 class TasksActivity : AppCompatActivity() {
 
@@ -38,8 +37,8 @@ class TasksActivity : AppCompatActivity() {
 
     private lateinit var drawerLayout: DrawerLayout
 
-    private val tasksPresenter by inject<TasksPresenter>()
-    private val tasksFragment by inject<TasksFragment>()
+    private val tasksPresenter: TasksPresenter by inject()
+    private val tasksFragment: TasksFragment by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

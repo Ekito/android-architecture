@@ -25,8 +25,7 @@ import android.view.MenuItem
 import com.example.android.architecture.blueprints.todoapp.R
 import com.example.android.architecture.blueprints.todoapp.util.replaceFragmentInActivity
 import com.example.android.architecture.blueprints.todoapp.util.setupActionBar
-import org.koin.android.ext.android.app.inject
-import org.koin.android.ext.android.app.release
+import org.koin.standalone.inject
 
 /**
  * Show statistics for tasks.
@@ -35,7 +34,7 @@ class StatisticsActivity : AppCompatActivity() {
 
     private lateinit var drawerLayout: DrawerLayout
 
-    val statisticsFragment by inject<StatisticsFragment>()
+    val statisticsFragment: StatisticsFragment by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

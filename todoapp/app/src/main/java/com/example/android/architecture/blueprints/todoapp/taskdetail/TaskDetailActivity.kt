@@ -20,16 +20,15 @@ import android.support.v7.app.AppCompatActivity
 import com.example.android.architecture.blueprints.todoapp.R
 import com.example.android.architecture.blueprints.todoapp.util.replaceFragmentInActivity
 import com.example.android.architecture.blueprints.todoapp.util.setupActionBar
-import org.koin.android.ext.android.app.getKoin
-import org.koin.android.ext.android.app.inject
-import org.koin.android.ext.android.app.release
+import org.koin.standalone.getKoin
+import org.koin.standalone.inject
 
 /**
  * Displays task details screen.
  */
 class TaskDetailActivity : AppCompatActivity() {
 
-    private val taskDetailFragment by inject<TaskDetailFragment>()
+    private val taskDetailFragment: TaskDetailFragment by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

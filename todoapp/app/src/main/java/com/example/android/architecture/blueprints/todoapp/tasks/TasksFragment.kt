@@ -31,8 +31,8 @@ import com.example.android.architecture.blueprints.todoapp.data.Task
 import com.example.android.architecture.blueprints.todoapp.di.Context
 import com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailActivity
 import com.example.android.architecture.blueprints.todoapp.util.showSnackBar
-import org.koin.android.ext.android.app.inject
-import org.koin.android.ext.android.app.release
+import org.koin.standalone.inject
+import org.koin.standalone.releaseContext
 import java.util.*
 
 /**
@@ -40,7 +40,7 @@ import java.util.*
  */
 class TasksFragment : Fragment(), TasksContract.View {
 
-    override val presenter by inject<TasksPresenter>()
+    override val presenter: TasksContract.Presenter by inject()
 
     override var isActive: Boolean = false
         get() = isAdded
@@ -78,7 +78,7 @@ class TasksFragment : Fragment(), TasksContract.View {
     }
 
     override fun onPause() {
-        release(Context.Tasks)
+        releaseContext(Context.Tasks)
         super.onPause()
     }
 

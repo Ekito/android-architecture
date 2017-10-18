@@ -23,8 +23,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.example.android.architecture.blueprints.todoapp.R
 import com.example.android.architecture.blueprints.todoapp.di.Context
-import org.koin.android.ext.android.app.inject
-import org.koin.android.ext.android.app.release
+import org.koin.standalone.inject
+import org.koin.standalone.releaseContext
 
 /**
  * Main UI for the statistics screen.
@@ -33,7 +33,7 @@ class StatisticsFragment : Fragment(), StatisticsContract.View {
 
     private lateinit var statisticsTV: TextView
 
-    override val presenter by inject<StatisticsContract.Presenter>()
+    override val presenter: StatisticsContract.Presenter by inject()
 
     override val isActive: Boolean
         get() = isAdded
@@ -52,7 +52,7 @@ class StatisticsFragment : Fragment(), StatisticsContract.View {
     }
 
     override fun onPause() {
-        release(Context.Statistics)
+        releaseContext(Context.Statistics)
         super.onPause()
     }
 

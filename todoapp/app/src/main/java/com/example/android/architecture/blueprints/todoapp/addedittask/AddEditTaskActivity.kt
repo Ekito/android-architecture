@@ -21,16 +21,16 @@ import android.support.v7.app.AppCompatActivity
 import com.example.android.architecture.blueprints.todoapp.R
 import com.example.android.architecture.blueprints.todoapp.util.replaceFragmentInActivity
 import com.example.android.architecture.blueprints.todoapp.util.setupActionBar
-import org.koin.android.ext.android.app.getKoin
-import org.koin.android.ext.android.app.inject
+import org.koin.standalone.getKoin
+import org.koin.standalone.inject
 
 /**
  * Displays an add or edit task screen.
  */
 class AddEditTaskActivity : AppCompatActivity() {
 
-    private val addEditTaskFragment by inject<AddEditTaskFragment>()
-    private val addEditTaskPresenter by inject<AddEditTaskPresenter>()
+    private val addEditTaskFragment: AddEditTaskFragment by inject()
+    private val addEditTaskPresenter: AddEditTaskPresenter by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

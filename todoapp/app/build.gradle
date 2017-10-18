@@ -103,4 +103,6 @@ dependencies {
     // Koin
     compile "org.koin:koin-android:$koin_version"
 
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
 }

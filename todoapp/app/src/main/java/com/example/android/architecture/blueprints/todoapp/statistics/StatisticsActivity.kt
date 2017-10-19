@@ -25,7 +25,7 @@ import android.view.MenuItem
 import com.example.android.architecture.blueprints.todoapp.R
 import com.example.android.architecture.blueprints.todoapp.util.replaceFragmentInActivity
 import com.example.android.architecture.blueprints.todoapp.util.setupActionBar
-import org.koin.standalone.inject
+import org.koin.android.ext.android.inject
 
 /**
  * Show statistics for tasks.

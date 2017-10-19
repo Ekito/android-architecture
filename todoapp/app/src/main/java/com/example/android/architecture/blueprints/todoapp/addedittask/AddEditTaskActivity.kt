@@ -21,8 +21,8 @@ import android.support.v7.app.AppCompatActivity
 import com.example.android.architecture.blueprints.todoapp.R
 import com.example.android.architecture.blueprints.todoapp.util.replaceFragmentInActivity
 import com.example.android.architecture.blueprints.todoapp.util.setupActionBar
-import org.koin.standalone.getKoin
-import org.koin.standalone.inject
+import org.koin.android.ext.android.getKoin
+import org.koin.android.ext.android.inject
 
 /**
  * Displays an add or edit task screen.

@@ -3,7 +3,7 @@ package com.example.android.architecture.blueprints.todoapp
 import android.app.Application
 import com.example.android.architecture.blueprints.todoapp.di.moduleList
 import com.squareup.leakcanary.LeakCanary
-import org.koin.android.newKoinContext
+import org.koin.android.ext.koin.newKoinContext
 
 /**
  * Todo Application - main class
@@ -18,6 +18,7 @@ class TodoApplication : Application() {
             return
         }
         LeakCanary.install(this)
+
         newKoinContext(this, moduleList())
     }
 }

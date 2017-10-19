@@ -19,7 +19,7 @@ import com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetail
 import com.example.android.architecture.blueprints.todoapp.tasks.TasksContract
 import com.example.android.architecture.blueprints.todoapp.tasks.TasksFragment
 import com.example.android.architecture.blueprints.todoapp.tasks.TasksPresenter
-import org.koin.android.AndroidModule
+import org.koin.android.module.AndroidModule
 
 /**
  * Module list

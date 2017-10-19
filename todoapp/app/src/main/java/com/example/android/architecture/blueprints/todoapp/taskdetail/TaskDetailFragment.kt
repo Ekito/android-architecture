@@ -20,7 +20,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
-import android.support.v4.app.Fragment
 import android.view.*
 import android.widget.CheckBox
 import android.widget.TextView
@@ -29,13 +28,15 @@ import com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTa
 import com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskFragment
 import com.example.android.architecture.blueprints.todoapp.di.Context
 import com.example.android.architecture.blueprints.todoapp.util.showSnackBar
-import org.koin.standalone.inject
-import org.koin.standalone.releaseContext
+import org.koin.android.contextaware.ContextAwareFragment
+import org.koin.android.ext.android.inject
 
 /**
  * Main UI for the task detail screen.
  */
-class TaskDetailFragment : Fragment(), TaskDetailContract.View {
+class TaskDetailFragment : ContextAwareFragment(), TaskDetailContract.View {
+
+    override val contextName = Context.TaskDetail
 
     private lateinit var detailTitle: TextView
 
@@ -52,11 +53,6 @@ class TaskDetailFragment : Fragment(), TaskDetailContract.View {
         super.onResume()
         presenter.view = this
         presenter.start()
-    }
-
-    override fun onPause() {
-        releaseContext(Context.TaskDetail)
-        super.onPause()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

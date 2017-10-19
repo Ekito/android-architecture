@@ -4,7 +4,7 @@ import com.example.android.architecture.blueprints.todoapp.data.source.TasksData
 import com.example.android.architecture.blueprints.todoapp.data.source.TasksRepository
 import com.example.android.architecture.blueprints.todoapp.data.source.local.TasksLocalDataSource
 import com.example.android.architecture.blueprints.todoapp.data.source.remote.TasksRemoteDataSource
-import org.koin.android.AndroidModule
+import org.koin.android.module.AndroidModule
 
 /**
  * Repository module

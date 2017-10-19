@@ -7,7 +7,7 @@ import com.example.android.architecture.blueprints.todoapp.di.moduleList
 import com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailActivity
 import org.junit.Test
 import org.koin.Koin
-import org.koin.android.init
+import org.koin.android.ext.koin.init
 import org.mockito.Mockito
 
 /**

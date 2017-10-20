@@ -12,7 +12,7 @@ import org.koin.android.module.AndroidModule
 class RepositoryModule : AndroidModule() {
     override fun context() = applicationContext {
         provide("remoteDataSource") { TasksRemoteDataSource() }
-        provide("localDataSource") { TasksLocalDataSource(applicationContext) }
+        provide("localDataSource") { TasksLocalDataSource(get()) }
 
         provide { TasksRepository(get("remoteDataSource"), get("localDataSource")) } bind (TasksDataSource::class)
     }

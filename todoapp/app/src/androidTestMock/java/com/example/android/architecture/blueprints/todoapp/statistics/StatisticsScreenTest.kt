@@ -15,7 +15,6 @@
  */
 package com.example.android.architecture.blueprints.todoapp.statistics
 
-import android.app.Application
 import android.content.Intent
 import android.support.test.InstrumentationRegistry
 import android.support.test.espresso.Espresso.onView
@@ -26,26 +25,20 @@ import android.support.test.filters.LargeTest
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import com.example.android.architecture.blueprints.todoapp.R
-import com.example.android.architecture.blueprints.todoapp.RepositoryModule
 import com.example.android.architecture.blueprints.todoapp.data.FakeTasksRemoteDataSource
 import com.example.android.architecture.blueprints.todoapp.data.Task
-import com.example.android.architecture.blueprints.todoapp.di.TodoAppModule
+import com.example.android.architecture.blueprints.todoapp.data.source.TasksRepository
 import com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailActivity
 import org.hamcrest.Matchers.containsString
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.koin.Koin
-import org.koin.KoinContext
-import org.koin.android.init
 
 /**
  * Tests for the statistics screen.
  */
-@RunWith(AndroidJUnit4::class)
-@LargeTest
-class StatisticsScreenTest {
+@RunWith(AndroidJUnit4::class) @LargeTest class StatisticsScreenTest {
 
     /**
      * [ActivityTestRule] is a JUnit [@Rule][Rule] to launch your activity under test.
@@ -55,21 +48,12 @@ class StatisticsScreenTest {
      * Rules are interceptors which are executed for each test method and are important building
      * blocks of Junit tests.
      */
-    @Rule
-    @JvmField
-    var statisticsActivityTestRule = ActivityTestRule(
+    @Rule @JvmField var statisticsActivityTestRule = ActivityTestRule(
             StatisticsActivity::class.java, true, false)
-
-    /**
-     * Koin context
-     */
-    lateinit var koinContext: KoinContext
 
     /**
      * Setup your test fixture with a fake task id. The [TaskDetailActivity] is started with
      * a particular task id, which is then loaded from the service API.
-
-
 
      *
      *
@@ -77,12 +61,10 @@ class StatisticsScreenTest {
      * the service API. This is a great way to make your tests more reliable and faster at the same
      * time, since they are isolated from any outside dependencies.
      */
-    @Before
-    fun intentWithStubbedTaskId() {
-        // init modules
-        koinContext = Koin().init(InstrumentationRegistry.getTargetContext().applicationContext as Application).build(RepositoryModule(), TodoAppModule())
+    @Before fun intentWithStubbedTaskId() {
         // Given some tasks
-        with(koinContext.get<FakeTasksRemoteDataSource>()) {
+//        TasksRepository.destroyInstance()
+        with(FakeTasksRemoteDataSource.getInstance()) {
             addTasks(Task("Title1").apply { isCompleted = false })
             addTasks(Task("Title2").apply { isCompleted = true })
         }
@@ -91,8 +73,7 @@ class StatisticsScreenTest {
         statisticsActivityTestRule.launchActivity(Intent())
     }
 
-    @Test
-    fun Tasks_ShowsNonEmptyMessage() {
+    @Test fun Tasks_ShowsNonEmptyMessage() {
         // Check that the active and completed tasks text is displayed
         with(InstrumentationRegistry.getTargetContext()) {
             val expectedActiveTaskText = getString(R.string.statistics_active_tasks)

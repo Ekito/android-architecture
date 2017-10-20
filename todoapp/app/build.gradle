@@ -44,7 +44,7 @@ android {
 
     // Remove mockRelease as it's not needed.
     android.variantFilter { variant ->
-        if(variant.buildType.name.equals('release')
+        if (variant.buildType.name.equals('release')
                 && variant.getFlavors().get(0).name.equals('mock')) {
             variant.setIgnore(true);
         }
@@ -102,7 +102,5 @@ dependencies {
 
     // Koin
     compile "org.koin:koin-android:$koin_version"
-//
-//    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.4'
-//    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+    testCompile "org.koin:koin-test:$koin_version"
 }

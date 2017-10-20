@@ -16,8 +16,7 @@
 package com.example.android.architecture.blueprints.todoapp.data.source
 
 import com.example.android.architecture.blueprints.todoapp.data.Task
-import java.util.ArrayList
-import java.util.LinkedHashMap
+import java.util.*
 
 /**
  * Concrete implementation to load tasks from the data sources into a cache.
@@ -236,8 +235,9 @@ class TasksRepository(
 //         * *
 //         * @return the [TasksRepository] instance
 //         */
-//        @JvmStatic fun getInstance(tasksRemoteDataSource: TasksDataSource,
-//                tasksLocalDataSource: TasksDataSource): TasksRepository {
+//        @JvmStatic
+//        fun getInstance(tasksRemoteDataSource: TasksDataSource,
+//                        tasksLocalDataSource: TasksDataSource): TasksRepository {
 //            return INSTANCE ?: TasksRepository(tasksRemoteDataSource, tasksLocalDataSource)
 //                    .apply { INSTANCE = this }
 //        }
@@ -246,7 +246,8 @@ class TasksRepository(
 //         * Used to force [getInstance] to create a new instance
 //         * next time it's called.
 //         */
-//        @JvmStatic fun destroyInstance() {
+//        @JvmStatic
+//        fun destroyInstance() {
 //            INSTANCE = null
 //        }
 //    }

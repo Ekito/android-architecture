@@ -2,7 +2,7 @@ package com.example.android.architecture.blueprints.todoapp
 
 import android.app.Application
 import com.example.android.architecture.blueprints.todoapp.di.moduleList
-import org.koin.android.ext.koin.newKoinContext
+import org.koin.android.ext.koin.startAndroidContext
 
 /**
  * Todo Application - main class
@@ -10,14 +10,8 @@ import org.koin.android.ext.koin.newKoinContext
 class TodoApplication : Application() {
 
     override fun onCreate() {
-//        super.onCreate()
-//        if (LeakCanary.isInAnalyzerProcess(this)) {
-//            // This process is dedicated to LeakCanary for heap analysis.
-//            // You should not init your app in this process.
-//            return
-//        }
-//        LeakCanary.install(this)
+        super.onCreate()
 
-        newKoinContext(this, moduleList())
+        startAndroidContext(this, moduleList())
     }
 }

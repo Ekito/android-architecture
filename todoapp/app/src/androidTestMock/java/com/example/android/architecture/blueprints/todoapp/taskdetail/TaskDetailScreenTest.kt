@@ -16,9 +16,7 @@
 package com.example.android.architecture.blueprints.todoapp.taskdetail
 
 import android.app.Activity
-import android.app.Application
 import android.content.Intent
-import android.support.test.InstrumentationRegistry
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.matcher.ViewMatchers.*
@@ -26,20 +24,13 @@ import android.support.test.filters.LargeTest
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import com.example.android.architecture.blueprints.todoapp.R
-import com.example.android.architecture.blueprints.todoapp.RepositoryModule
 import com.example.android.architecture.blueprints.todoapp.TestUtils
 import com.example.android.architecture.blueprints.todoapp.data.FakeTasksRemoteDataSource
 import com.example.android.architecture.blueprints.todoapp.data.Task
-import com.example.android.architecture.blueprints.todoapp.di.TodoAppModule
 import org.hamcrest.core.IsNot.not
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.koin.Koin
-import org.koin.KoinContext
-import org.koin.android.init
-import org.mockito.Mockito
 
 /**
  * Tests for the tasks screen, the main screen which contains a list of all tasks.
@@ -91,17 +82,6 @@ class TaskDetailScreenTest {
     }
 
     /**
-     * Koin context
-     */
-    lateinit var koinContext: KoinContext
-
-    @Before
-    fun before() {
-        // init modules
-        koinContext = Koin().init(InstrumentationRegistry.getTargetContext().applicationContext as Application).build(RepositoryModule(),TodoAppModule())
-    }
-
-    /**
      * Setup your test fixture with a fake task id. The [TaskDetailActivity] is started with
      * a particular task id, which is then loaded from the service API.
 
@@ -114,8 +94,7 @@ class TaskDetailScreenTest {
     private fun startActivityWithWithStubbedTask(task: Task) {
         // Add a task stub to the fake service api layer.
 //        TasksRepository.destroyInstance()
-
-        koinContext.get<FakeTasksRemoteDataSource>().addTasks(task)
+        FakeTasksRemoteDataSource.getInstance().addTasks(task)
 
         // Lazily start the Activity from the ActivityTestRule this time to inject the start Intent
         val startIntent = Intent().apply { putExtra(TaskDetailActivity.EXTRA_TASK_ID, task.id) }

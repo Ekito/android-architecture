@@ -173,4 +173,9 @@ class TasksLocalDataSource(val context: Context) : TasksDataSource {
             close()
         }
     }
+
+    companion object {
+        @JvmStatic
+        fun getInstance(context: Context) = TasksLocalDataSource(context)
+    }
 }

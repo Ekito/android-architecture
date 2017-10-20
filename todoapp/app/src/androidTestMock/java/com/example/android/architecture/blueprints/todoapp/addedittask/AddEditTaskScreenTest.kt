@@ -16,7 +16,6 @@
 
 package com.example.android.architecture.blueprints.todoapp.addedittask
 
-import android.app.Application
 import android.content.Intent
 import android.content.res.Resources
 import android.support.test.InstrumentationRegistry
@@ -35,20 +34,15 @@ import android.support.v7.widget.Toolbar
 import android.view.View
 import com.example.android.architecture.blueprints.todoapp.R
 import com.example.android.architecture.blueprints.todoapp.R.id.toolbar
-import com.example.android.architecture.blueprints.todoapp.RepositoryModule
 import com.example.android.architecture.blueprints.todoapp.TestUtils
 import com.example.android.architecture.blueprints.todoapp.data.FakeTasksRemoteDataSource
 import com.example.android.architecture.blueprints.todoapp.data.Task
-import com.example.android.architecture.blueprints.todoapp.di.TodoAppModule
 import org.hamcrest.Description
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.koin.Koin
-import org.koin.KoinContext
-import org.koin.android.init
-import org.mockito.Mockito.mock
+import org.koin.log.PrintLogger
 
 /**
  * Tests for the add task screen.
@@ -56,6 +50,10 @@ import org.mockito.Mockito.mock
 @RunWith(AndroidJUnit4::class)
 @LargeTest
 class AddEditTaskScreenTest {
+
+    init {
+        Koin.logger = PrintLogger()
+    }
 
     /**
      * [IntentsTestRule] is an [ActivityTestRule] which inits and releases Espresso
@@ -71,21 +69,10 @@ class AddEditTaskScreenTest {
     var activityTestRule = ActivityTestRule(AddEditTaskActivity::class.java,
             false, false)
 
-    /**
-     * Koin context
-     */
-    lateinit var koinContext: KoinContext
-
-    @Before
-    fun before() {
-        // init modules
-        koinContext = Koin().init(InstrumentationRegistry.getTargetContext().applicationContext as Application).build(RepositoryModule(), TodoAppModule())
-    }
-
     @Test
     fun emptyTask_isNotSaved() {
         // Launch activity to add a new task
-        launchNewTaskActivity("")
+        launchNewTaskActivity(null)
 
         // Add invalid title and description combination
         onView(withId(R.id.add_task_title)).perform(clearText())
@@ -100,7 +87,7 @@ class AddEditTaskScreenTest {
     @Test
     fun toolbarTitle_newTask_persistsRotation() {
         // Launch activity to add a new task
-        launchNewTaskActivity("")
+        launchNewTaskActivity(null)
 
         // Check that the toolbar shows the correct title
         onView(withId(toolbar)).check(matches(withToolbarTitle(R.string.add_task)))
@@ -116,7 +103,7 @@ class AddEditTaskScreenTest {
     fun toolbarTitle_editTask_persistsRotation() {
         // Put a task in the repository and start the activity to edit it
 //        TasksRepository.destroyInstance()
-        koinContext.get<FakeTasksRemoteDataSource>().addTasks(Task("Title1", "", TASK_ID).apply {
+        FakeTasksRemoteDataSource.getInstance().addTasks(Task("Title1", "", TASK_ID).apply {
             isCompleted = false
         })
         launchNewTaskActivity(TASK_ID)
@@ -134,7 +121,7 @@ class AddEditTaskScreenTest {
     /**
      * @param taskId is null if used to add a new task, otherwise it edits the task.
      */
-    private fun launchNewTaskActivity(taskId: String) {
+    private fun launchNewTaskActivity(taskId: String?) {
         val intent = Intent(InstrumentationRegistry.getInstrumentation()
                 .targetContext, AddEditTaskActivity::class.java)
                 .apply {

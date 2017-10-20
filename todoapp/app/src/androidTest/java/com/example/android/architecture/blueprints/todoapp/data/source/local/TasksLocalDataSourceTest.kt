@@ -16,30 +16,29 @@
 
 package com.example.android.architecture.blueprints.todoapp.data.source.local
 
-import android.app.Application
 import android.support.test.InstrumentationRegistry
 import android.support.test.filters.LargeTest
 import android.support.test.runner.AndroidJUnit4
-import com.example.android.architecture.blueprints.todoapp.RepositoryModule
 import com.example.android.architecture.blueprints.todoapp.data.Task
 import com.example.android.architecture.blueprints.todoapp.data.source.TasksDataSource
 import org.hamcrest.core.Is.`is`
 import org.junit.After
-import org.junit.Assert.*
+import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertThat
+import org.junit.Assert.assertTrue
+import org.junit.Assert.fail
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.koin.Koin
-import org.koin.android.init
-import org.mockito.Mockito.*
-import java.util.*
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.never
+import org.mockito.Mockito.verify
+import java.util.LinkedList
 
 /**
  * Integration test for the [TasksDataSource], which uses the [TasksDbHelper].
  */
-@RunWith(AndroidJUnit4::class)
-@LargeTest
-class TasksLocalDataSourceTest {
+@RunWith(AndroidJUnit4::class) @LargeTest class TasksLocalDataSourceTest {
 
     private val TITLE = "title"
     private val TITLE2 = "title2"
@@ -47,24 +46,20 @@ class TasksLocalDataSourceTest {
 
     private lateinit var localDataSource: TasksLocalDataSource
 
-    @Before
-    fun setup() {
-        val ctx = Koin().init(InstrumentationRegistry.getTargetContext().applicationContext as Application).build(RepositoryModule())
-        localDataSource = ctx.get()
+    @Before fun setup() {
+        localDataSource = TasksLocalDataSource.getInstance(
+                InstrumentationRegistry.getTargetContext())
     }
 
-    @After
-    fun cleanUp() {
+    @After fun cleanUp() {
         localDataSource.deleteAllTasks()
     }
 
-    @Test
-    fun testPreConditions() {
+    @Test fun testPreConditions() {
         assertNotNull(localDataSource)
     }
 
-    @Test
-    fun saveTask_retrievesTask() {
+    @Test fun saveTask_retrievesTask() {
         // Given a new task
         val newTask = Task(TITLE)
 
@@ -85,8 +80,7 @@ class TasksLocalDataSourceTest {
         }
     }
 
-    @Test
-    fun completeTask_retrievedTaskIsComplete() {
+    @Test fun completeTask_retrievedTaskIsComplete() {
         // Given a new task in the persistent repository
         val newTask = Task(TITLE)
         localDataSource.saveTask(newTask)
@@ -130,8 +124,7 @@ class TasksLocalDataSourceTest {
         assertThat(newTask.isCompleted, `is`(false))
     }
 
-    @Test
-    fun clearCompletedTask_taskNotRetrievable() {
+    @Test fun clearCompletedTask_taskNotRetrievable() {
         // Initialize mocks for the callbacks.
         val callback1 = mock(TasksDataSource.GetTaskCallback::class.java)
         val callback2 = mock(TasksDataSource.GetTaskCallback::class.java)
@@ -169,8 +162,7 @@ class TasksLocalDataSourceTest {
         }
     }
 
-    @Test
-    fun deleteAllTasks_emptyListOfRetrievedTask() {
+    @Test fun deleteAllTasks_emptyListOfRetrievedTask() {
         with(localDataSource) {
             // Given a new task in the persistent repository and a mocked callback
             saveTask(Task(TITLE))
@@ -187,8 +179,7 @@ class TasksLocalDataSourceTest {
         }
     }
 
-    @Test
-    fun getTasks_retrieveSavedTasks() {
+    @Test fun getTasks_retrieveSavedTasks() {
         with(localDataSource) {
             // Given 2 new tasks in the persistent repository
             val newTask1 = Task(TITLE)

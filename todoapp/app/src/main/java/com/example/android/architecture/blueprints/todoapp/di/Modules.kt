@@ -27,7 +27,7 @@ import org.koin.android.module.AndroidModule
 fun moduleList() = listOf(RepositoryModule(), TodoAppModule())
 
 /**
- * Koin module
+ * Koin main module
  */
 class TodoAppModule : AndroidModule() {
     override fun context() = applicationContext {

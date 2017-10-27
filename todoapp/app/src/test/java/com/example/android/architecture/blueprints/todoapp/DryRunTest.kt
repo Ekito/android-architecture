@@ -18,7 +18,10 @@ class DryRunTest {
     fun todoAppModuleDryRun() {
         Koin().init(Mockito.mock(Application::class.java))
                 // bootstrap with default values
-                .properties(mapOf(TaskDetailActivity.EXTRA_TASK_ID to "", AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID to "", AddEditTaskActivity.SHOULD_LOAD_DATA_FROM_REPO_KEY to false))
+                .properties(
+                        mapOf(TaskDetailActivity.EXTRA_TASK_ID to "",
+                                AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID to "",
+                                AddEditTaskActivity.SHOULD_LOAD_DATA_FROM_REPO_KEY to false))
                 .build(moduleList()).dryRun()
     }
 }

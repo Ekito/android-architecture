@@ -7,7 +7,7 @@ This version of the app is called todo-mvp-kotlin-koin, and provides a foundatio
 * Provide a basic [Model-View-Presenter](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93presenter) (MVP) architecture without using any architectural frameworks.
 * Act as a reference point for comparing and contrasting the other kotlin samples in this project.
 * Leverage idiomatic kotlin to improve readability and limit verbosity, as compared to the TODO-MVP java project.
-* Simple use of Koin for dependency injection
+* Ue of Koin for dependency injection
 
 This sample is a work in progress.
 

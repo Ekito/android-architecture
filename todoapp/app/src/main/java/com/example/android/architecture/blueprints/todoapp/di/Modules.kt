@@ -24,7 +24,7 @@ import org.koin.android.module.AndroidModule
 /**
  * Module list
  */
-fun moduleList() = listOf(RepositoryModule(), TodoAppModule())
+fun todoAppModules() = listOf(RepositoryModule(), TodoAppModule())
 
 /**
  * Koin main module

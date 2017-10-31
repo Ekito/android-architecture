@@ -1,7 +1,7 @@
 package com.example.android.architecture.blueprints.todoapp
 
 import android.app.Application
-import com.example.android.architecture.blueprints.todoapp.di.moduleList
+import com.example.android.architecture.blueprints.todoapp.di.todoAppModules
 import org.koin.android.ext.android.startAndroidContext
 
 /**
@@ -16,6 +16,6 @@ class TodoApplication : Application() {
         super.onCreate()
 
         // Start Koin
-        startAndroidContext(this, moduleList())
+        startAndroidContext(this, todoAppModules())
     }
 }

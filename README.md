@@ -175,7 +175,8 @@ Medium: If you already understand TODO-MVP (Java), you need to [learn](http://ko
 
 #### Unit testing
 
-Same as TODO-MVP.
+Koin brings ability to inject components into JUnit tests.
+Else Same as TODO-MVP.
 
 #### Integration testing
 

@@ -21,7 +21,7 @@ import android.support.v7.app.AppCompatActivity
 import com.example.android.architecture.blueprints.todoapp.R
 import com.example.android.architecture.blueprints.todoapp.util.replaceFragmentInActivity
 import com.example.android.architecture.blueprints.todoapp.util.setupActionBar
-import org.koin.android.ext.android.getKoin
+import org.koin.android.ext.android.bindProperty
 import org.koin.android.ext.android.inject
 
 /**
@@ -37,7 +37,7 @@ class AddEditTaskActivity : AppCompatActivity() {
         setContentView(R.layout.addtask_act)
 
         val taskId: String? = intent.getStringExtra(AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID)
-        getKoin().setProperty(AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID, taskId ?: "")
+        bindProperty(AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID, taskId ?: "")
 
         // Set up the toolbar.
         setupActionBar(R.id.toolbar) {
@@ -56,7 +56,7 @@ class AddEditTaskActivity : AppCompatActivity() {
                 // Data might not have loaded when the config change happen, so we saved the state.
                 savedInstanceState?.getBoolean(SHOULD_LOAD_DATA_FROM_REPO_KEY) ?: true
 
-        getKoin().setProperty(SHOULD_LOAD_DATA_FROM_REPO_KEY, shouldLoadDataFromRepo)
+        bindProperty(SHOULD_LOAD_DATA_FROM_REPO_KEY, shouldLoadDataFromRepo)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

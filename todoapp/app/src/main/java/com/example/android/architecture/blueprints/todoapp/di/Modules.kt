@@ -1,7 +1,6 @@
 package com.example.android.architecture.blueprints.todoapp.di
 
 import com.example.android.architecture.blueprints.todoapp.RepositoryModule
-import com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskActivity
 import com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskContract
 import com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskFragment
 import com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskPresenter
@@ -12,11 +11,11 @@ import com.example.android.architecture.blueprints.todoapp.di.Context.Tasks
 import com.example.android.architecture.blueprints.todoapp.statistics.StatisticsContract
 import com.example.android.architecture.blueprints.todoapp.statistics.StatisticsFragment
 import com.example.android.architecture.blueprints.todoapp.statistics.StatisticsPresenter
-import com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailActivity
 import com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailContract
 import com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailFragment
 import com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailPresenter
 import com.example.android.architecture.blueprints.todoapp.tasks.TasksContract
+import com.example.android.architecture.blueprints.todoapp.tasks.TasksFilterType
 import com.example.android.architecture.blueprints.todoapp.tasks.TasksFragment
 import com.example.android.architecture.blueprints.todoapp.tasks.TasksPresenter
 import org.koin.android.module.AndroidModule
@@ -33,12 +32,12 @@ class TodoAppModule : AndroidModule() {
     override fun context() = applicationContext {
         context(Tasks) {
             provide { TasksFragment() }
-            provide { TasksPresenter(get()) } bind TasksContract.Presenter::class
+            provide { TasksPresenter(getProperty(CURRENT_FILTERING_KEY, TasksFilterType.ALL_TASKS), get()) } bind TasksContract.Presenter::class
         }
 
         context(TaskDetail) {
             provide { TaskDetailFragment() }
-            provide { TaskDetailPresenter(getProperty(TaskDetailActivity.EXTRA_TASK_ID), get()) } bind TaskDetailContract.Presenter::class
+            provide { TaskDetailPresenter(getProperty(EXTRA_TASK_ID), get()) } bind TaskDetailContract.Presenter::class
         }
 
         context(Statistics) {
@@ -48,10 +47,18 @@ class TodoAppModule : AndroidModule() {
 
         context(AddEditTask) {
             provide { AddEditTaskFragment() }
-            provide { AddEditTaskPresenter(getProperty(AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID), get(), getProperty(AddEditTaskActivity.SHOULD_LOAD_DATA_FROM_REPO_KEY)) } bind AddEditTaskContract.Presenter::class
+            provide { AddEditTaskPresenter(getProperty(ARGUMENT_EDIT_TASK_ID), get(), getProperty(SHOULD_LOAD_DATA_FROM_REPO_KEY, true)) } bind AddEditTaskContract.Presenter::class
         }
     }
+
+    companion object Properties {
+        const val CURRENT_FILTERING_KEY = "CURRENT_FILTERING_KEY"
+        const val EXTRA_TASK_ID = "TASK_ID"
+        const val ARGUMENT_EDIT_TASK_ID = "EDIT_TASK_ID"
+        const val SHOULD_LOAD_DATA_FROM_REPO_KEY = "SHOULD_LOAD_DATA_FROM_REPO_KEY"
+    }
 }
+
 
 /**
  * Module constants

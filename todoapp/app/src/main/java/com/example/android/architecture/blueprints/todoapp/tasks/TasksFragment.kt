@@ -28,18 +28,18 @@ import com.example.android.architecture.blueprints.todoapp.R
 import com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskActivity
 import com.example.android.architecture.blueprints.todoapp.data.Task
 import com.example.android.architecture.blueprints.todoapp.di.Context
+import com.example.android.architecture.blueprints.todoapp.di.TodoAppModule.Properties.EXTRA_TASK_ID
 import com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailActivity
 import com.example.android.architecture.blueprints.todoapp.util.showSnackBar
 import org.koin.android.contextaware.ContextAwareFragment
+import org.koin.android.ext.android.bindProperty
 import org.koin.android.ext.android.inject
 import java.util.*
 
 /**
  * Display a grid of [Task]s. User can choose to view all, active or completed tasks.
  */
-class TasksFragment : ContextAwareFragment(), TasksContract.View {
-
-    override val contextName: String = Context.Tasks
+class TasksFragment : ContextAwareFragment(Context.Tasks), TasksContract.View {
 
     override val presenter by inject<TasksContract.Presenter>()
 
@@ -76,6 +76,11 @@ class TasksFragment : ContextAwareFragment(), TasksContract.View {
         super.onResume()
         presenter.view = this
         presenter.start()
+    }
+
+    override fun onPause() {
+        presenter.stop()
+        super.onPause()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -212,9 +217,9 @@ class TasksFragment : ContextAwareFragment(), TasksContract.View {
     override fun showTaskDetailsUi(taskId: String) {
         // in it's own Activity, since it makes more sense that way and it gives us the flexibility
         // to show some Intent stubbing.
-        val intent = Intent(context, TaskDetailActivity::class.java).apply {
-            putExtra(TaskDetailActivity.EXTRA_TASK_ID, taskId)
-        }
+        val intent = Intent(context, TaskDetailActivity::class.java)
+
+        bindProperty(EXTRA_TASK_ID, taskId)
         startActivity(intent)
     }
 
@@ -291,9 +296,9 @@ class TasksFragment : ContextAwareFragment(), TasksContract.View {
         fun onActivateTaskClick(activatedTask: Task)
     }
 
-    companion object {
-
-        fun newInstance() = TasksFragment()
-    }
+//    companion object {
+//
+//        fun newInstance() = TasksFragment()
+//    }
 
 }

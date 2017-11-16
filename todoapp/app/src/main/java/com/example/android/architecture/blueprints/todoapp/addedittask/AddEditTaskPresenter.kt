@@ -18,6 +18,9 @@ package com.example.android.architecture.blueprints.todoapp.addedittask
 
 import com.example.android.architecture.blueprints.todoapp.data.Task
 import com.example.android.architecture.blueprints.todoapp.data.source.TasksDataSource
+import com.example.android.architecture.blueprints.todoapp.di.TodoAppModule.Properties.SHOULD_LOAD_DATA_FROM_REPO_KEY
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.bindProperty
 
 /**
  * Listens to user actions from the UI ([AddEditTaskFragment]), retrieves the data and updates
@@ -34,7 +37,7 @@ class AddEditTaskPresenter(
         private val taskId: String,
         val tasksRepository: TasksDataSource,
         override var isDataMissing: Boolean
-) : AddEditTaskContract.Presenter, TasksDataSource.GetTaskCallback {
+) : AddEditTaskContract.Presenter, TasksDataSource.GetTaskCallback, KoinComponent {
 
     override lateinit var view: AddEditTaskContract.View
 
@@ -42,6 +45,10 @@ class AddEditTaskPresenter(
         if (taskId.isNotEmpty() && isDataMissing) {
             populateTask()
         }
+    }
+
+    override fun stop() {
+        bindProperty(SHOULD_LOAD_DATA_FROM_REPO_KEY, isDataMissing)
     }
 
     override fun saveTask(title: String, description: String) {

@@ -33,9 +33,7 @@ import org.koin.android.ext.android.inject
 /**
  * Main UI for the add task screen. Users can enter a task title and description.
  */
-class AddEditTaskFragment : ContextAwareFragment(), AddEditTaskContract.View {
-
-    override val contextName: String = Context.AddEditTask
+class AddEditTaskFragment : ContextAwareFragment(Context.AddEditTask), AddEditTaskContract.View {
 
     override val presenter by inject<AddEditTaskContract.Presenter>()
 
@@ -45,11 +43,15 @@ class AddEditTaskFragment : ContextAwareFragment(), AddEditTaskContract.View {
     private lateinit var title: TextView
     private lateinit var description: TextView
 
-
     override fun onResume() {
         super.onResume()
         presenter.view = this
         presenter.start()
+    }
+
+    override fun onPause() {
+        presenter.stop()
+        super.onPause()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -92,14 +94,13 @@ class AddEditTaskFragment : ContextAwareFragment(), AddEditTaskContract.View {
         this.description.text = description
     }
 
-    companion object {
-        const val ARGUMENT_EDIT_TASK_ID = "EDIT_TASK_ID"
-
-//        fun newInstance(taskId: String?) =
-//                AddEditTaskFragment().apply {
-//                    arguments = Bundle().apply {
-//                        putString(AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID, taskId)
-//                    }
-//                }
-    }
+//    companion object {
+//
+////        fun newInstance(taskId: String?) =
+////                AddEditTaskFragment().apply {
+////                    arguments = Bundle().apply {
+////                        putString(AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID, taskId)
+////                    }
+////                }
+//    }
 }

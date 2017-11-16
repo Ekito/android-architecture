@@ -40,14 +40,14 @@ import org.hamcrest.core.IsNot.not
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.koin.test.components.KoinTest
+import org.koin.standalone.KoinComponent
 
 /**
  * Tests for the tasks screen, the main screen which contains a list of all tasks.
  */
 @RunWith(AndroidJUnit4::class)
 @LargeTest
-class TasksScreenTest : KoinTest {
+class TasksScreenTest : KoinComponent {
 
     private val TITLE1 = "TITLE1"
     private val DESCRIPTION = "DESCR"

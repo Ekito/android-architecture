@@ -20,7 +20,6 @@ import android.support.v7.app.AppCompatActivity
 import com.example.android.architecture.blueprints.todoapp.R
 import com.example.android.architecture.blueprints.todoapp.util.replaceFragmentInActivity
 import com.example.android.architecture.blueprints.todoapp.util.setupActionBar
-import org.koin.android.ext.android.bindProperty
 import org.koin.android.ext.android.inject
 
 /**
@@ -41,10 +40,6 @@ class TaskDetailActivity : AppCompatActivity() {
             setDisplayShowHomeEnabled(true)
         }
 
-        // Get the requested task id
-        val taskId = intent.getStringExtra(EXTRA_TASK_ID)
-        bindProperty(EXTRA_TASK_ID, taskId)
-
         supportFragmentManager
                 .findFragmentById(R.id.contentFrame) as TaskDetailFragment? ?:
                 taskDetailFragment.also {
@@ -55,9 +50,5 @@ class TaskDetailActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
-    }
-
-    companion object {
-        const val EXTRA_TASK_ID = "TASK_ID"
     }
 }

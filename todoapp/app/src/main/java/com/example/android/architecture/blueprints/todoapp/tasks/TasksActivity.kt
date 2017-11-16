@@ -33,11 +33,9 @@ import org.koin.android.ext.android.inject
 
 class TasksActivity : AppCompatActivity() {
 
-    private val CURRENT_FILTERING_KEY = "CURRENT_FILTERING_KEY"
 
     private lateinit var drawerLayout: DrawerLayout
 
-    private val tasksPresenter: TasksPresenter by inject()
     private val tasksFragment: TasksFragment by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,21 +58,6 @@ class TasksActivity : AppCompatActivity() {
                 as TasksFragment? ?: tasksFragment.also {
             replaceFragmentInActivity(it, R.id.contentFrame)
         }
-
-        // Create the presenter
-        tasksPresenter.apply {
-            // Load previously saved state, if available.
-            if (savedInstanceState != null) {
-                currentFiltering = savedInstanceState.getSerializable(CURRENT_FILTERING_KEY)
-                        as TasksFilterType
-            }
-        }
-    }
-
-    public override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState.apply {
-            putSerializable(CURRENT_FILTERING_KEY, tasksPresenter.currentFiltering)
-        })
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

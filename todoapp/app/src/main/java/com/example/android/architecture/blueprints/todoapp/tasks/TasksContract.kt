@@ -65,6 +65,8 @@ interface TasksContract {
 
         var currentFiltering: TasksFilterType
 
+        fun stop()
+
         fun result(requestCode: Int, resultCode: Int)
 
         fun loadTasks(forceUpdate: Boolean)

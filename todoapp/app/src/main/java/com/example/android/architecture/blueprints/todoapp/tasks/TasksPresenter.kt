@@ -20,24 +20,29 @@ import com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTa
 import com.example.android.architecture.blueprints.todoapp.data.Task
 import com.example.android.architecture.blueprints.todoapp.data.source.TasksDataSource
 import com.example.android.architecture.blueprints.todoapp.data.source.TasksRepository
+import com.example.android.architecture.blueprints.todoapp.di.TodoAppModule.Properties.CURRENT_FILTERING_KEY
 import com.example.android.architecture.blueprints.todoapp.util.EspressoIdlingResource
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.bindProperty
 import java.util.*
 
 /**
  * Listens to user actions from the UI ([TasksFragment]), retrieves the data and updates the
  * UI as required.
  */
-class TasksPresenter(private val tasksRepository: TasksRepository)
-    : TasksContract.Presenter {
+class TasksPresenter(override var currentFiltering: TasksFilterType, private val tasksRepository: TasksRepository)
+    : TasksContract.Presenter, KoinComponent {
 
     override lateinit var view: TasksContract.View
-
-    override var currentFiltering = TasksFilterType.ALL_TASKS
 
     private var firstLoad = true
 
     override fun start() {
         loadTasks(false)
+    }
+
+    override fun stop() {
+        bindProperty(CURRENT_FILTERING_KEY, currentFiltering)
     }
 
     override fun result(requestCode: Int, resultCode: Int) {

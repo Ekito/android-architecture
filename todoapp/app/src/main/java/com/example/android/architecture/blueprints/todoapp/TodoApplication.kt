@@ -1,8 +1,11 @@
 package com.example.android.architecture.blueprints.todoapp
 
 import android.app.Application
+import android.content.pm.ApplicationInfo
 import com.example.android.architecture.blueprints.todoapp.di.todoAppModules
+import org.koin.Koin
 import org.koin.android.ext.android.startAndroidContext
+import org.koin.android.logger.AndroidLogger
 
 /**
  * Todo Application - main class
@@ -17,5 +20,14 @@ class TodoApplication : Application() {
 
         // Start Koin
         startAndroidContext(this, todoAppModules())
+
+        // Default drop strategy
+//        ContextAwareConfig.defaultContextDrop = ContextDropMethod.OnPause
+
+        // Display some logs
+        val isDebug = (0 != applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE)
+        if (isDebug) {
+            Koin.logger = AndroidLogger()
+        }
     }
 }

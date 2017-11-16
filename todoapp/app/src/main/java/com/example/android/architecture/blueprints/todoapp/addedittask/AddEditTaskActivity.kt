@@ -19,10 +19,12 @@ package com.example.android.architecture.blueprints.todoapp.addedittask
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.example.android.architecture.blueprints.todoapp.R
+import com.example.android.architecture.blueprints.todoapp.di.TodoAppModule.Properties.ARGUMENT_EDIT_TASK_ID
 import com.example.android.architecture.blueprints.todoapp.util.replaceFragmentInActivity
 import com.example.android.architecture.blueprints.todoapp.util.setupActionBar
 import org.koin.android.ext.android.bindProperty
 import org.koin.android.ext.android.inject
+import org.koin.android.ext.android.property
 
 /**
  * Displays an add or edit task screen.
@@ -30,40 +32,31 @@ import org.koin.android.ext.android.inject
 class AddEditTaskActivity : AppCompatActivity() {
 
     private val addEditTaskFragment: AddEditTaskFragment by inject()
-    private val addEditTaskPresenter: AddEditTaskPresenter by inject()
+
+    private val taskId by property(ARGUMENT_EDIT_TASK_ID, "")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.addtask_act)
 
-        val taskId: String? = intent.getStringExtra(AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID)
-        bindProperty(AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID, taskId ?: "")
+//        val taskId: String? = intent.getStringExtra(AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID)
+//        bindProperty(AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID, taskId ?: "")
+
+        bindProperty(ARGUMENT_EDIT_TASK_ID, taskId)
 
         // Set up the toolbar.
         setupActionBar(R.id.toolbar) {
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
-            setTitle(if (taskId == null) R.string.add_task else R.string.edit_task)
+            setTitle(if (taskId.isEmpty()) R.string.add_task else R.string.edit_task)
         }
 
-        supportFragmentManager.findFragmentById(R.id.contentFrame) as AddEditTaskFragment?
+        supportFragmentManager
+                .findFragmentById(R.id.contentFrame) as AddEditTaskFragment?
                 ?: addEditTaskFragment.also {
-            replaceFragmentInActivity(it, R.id.contentFrame)
+            replaceFragmentInActivity(addEditTaskFragment, R.id.contentFrame)
         }
 
-        val shouldLoadDataFromRepo =
-                // Prevent the presenter from loading data from the repository if this is a config change.
-                // Data might not have loaded when the config change happen, so we saved the state.
-                savedInstanceState?.getBoolean(SHOULD_LOAD_DATA_FROM_REPO_KEY) ?: true
-
-        bindProperty(SHOULD_LOAD_DATA_FROM_REPO_KEY, shouldLoadDataFromRepo)
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        // Save the state so that next time we know if we need to refresh data.
-        super.onSaveInstanceState(outState.apply {
-            putBoolean(SHOULD_LOAD_DATA_FROM_REPO_KEY, addEditTaskPresenter.isDataMissing)
-        })
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -72,7 +65,6 @@ class AddEditTaskActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val SHOULD_LOAD_DATA_FROM_REPO_KEY = "SHOULD_LOAD_DATA_FROM_REPO_KEY"
         const val REQUEST_ADD_TASK = 1
     }
 }

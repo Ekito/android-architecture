@@ -43,5 +43,7 @@ interface AddEditTaskContract {
         fun saveTask(title: String, description: String)
 
         fun populateTask()
+
+        fun stop()
     }
 }

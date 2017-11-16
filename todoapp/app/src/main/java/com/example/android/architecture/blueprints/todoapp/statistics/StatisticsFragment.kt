@@ -28,9 +28,7 @@ import org.koin.android.ext.android.inject
 /**
  * Main UI for the statistics screen.
  */
-class StatisticsFragment : ContextAwareFragment(), StatisticsContract.View {
-
-    override val contextName = Context.Statistics
+class StatisticsFragment : ContextAwareFragment(Context.Statistics), StatisticsContract.View {
 
     private lateinit var statisticsTV: TextView
 

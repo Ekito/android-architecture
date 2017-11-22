@@ -93,14 +93,4 @@ class AddEditTaskFragment : ContextAwareFragment(Context.AddEditTask), AddEditTa
     override fun setDescription(description: String) {
         this.description.text = description
     }
-
-//    companion object {
-//
-////        fun newInstance(taskId: String?) =
-////                AddEditTaskFragment().apply {
-////                    arguments = Bundle().apply {
-////                        putString(AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID, taskId)
-////                    }
-////                }
-//    }
 }

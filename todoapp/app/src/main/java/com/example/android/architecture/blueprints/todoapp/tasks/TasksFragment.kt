@@ -32,8 +32,8 @@ import com.example.android.architecture.blueprints.todoapp.di.TodoAppModule.Prop
 import com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailActivity
 import com.example.android.architecture.blueprints.todoapp.util.showSnackBar
 import org.koin.android.contextaware.ContextAwareFragment
-import org.koin.android.ext.android.bindProperty
 import org.koin.android.ext.android.inject
+import org.koin.android.ext.android.setProperty
 import java.util.*
 
 /**
@@ -219,7 +219,7 @@ class TasksFragment : ContextAwareFragment(Context.Tasks), TasksContract.View {
         // to show some Intent stubbing.
         val intent = Intent(context, TaskDetailActivity::class.java)
 
-        bindProperty(EXTRA_TASK_ID, taskId)
+        setProperty(EXTRA_TASK_ID, taskId)
         startActivity(intent)
     }
 

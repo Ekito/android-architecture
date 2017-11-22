@@ -20,7 +20,7 @@ import com.example.android.architecture.blueprints.todoapp.data.Task
 import com.example.android.architecture.blueprints.todoapp.data.source.TasksDataSource
 import com.example.android.architecture.blueprints.todoapp.di.TodoAppModule.Properties.SHOULD_LOAD_DATA_FROM_REPO_KEY
 import org.koin.standalone.KoinComponent
-import org.koin.standalone.bindProperty
+import org.koin.standalone.setProperty
 
 /**
  * Listens to user actions from the UI ([AddEditTaskFragment]), retrieves the data and updates
@@ -48,7 +48,7 @@ class AddEditTaskPresenter(
     }
 
     override fun stop() {
-        bindProperty(SHOULD_LOAD_DATA_FROM_REPO_KEY, isDataMissing)
+        setProperty(SHOULD_LOAD_DATA_FROM_REPO_KEY, isDataMissing)
     }
 
     override fun saveTask(title: String, description: String) {

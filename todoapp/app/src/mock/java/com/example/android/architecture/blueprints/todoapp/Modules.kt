@@ -13,7 +13,6 @@ class RepositoryModule : AndroidModule() {
     override fun context() = applicationContext {
         provide("remoteDataSource") { FakeTasksRemoteDataSource() }
         provide("localDataSource") { TasksLocalDataSource(get()) }
-
-        provide { TasksRepository(get("remoteDataSource"), get("localDataSource")) } bind (TasksDataSource::class)
+        provide { TasksRepository(get("remoteDataSource"), get("localDataSource")) } bind TasksDataSource::class
     }
 }

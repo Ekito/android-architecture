@@ -29,8 +29,8 @@ import com.example.android.architecture.blueprints.todoapp.di.Context
 import com.example.android.architecture.blueprints.todoapp.di.TodoAppModule.Properties.ARGUMENT_EDIT_TASK_ID
 import com.example.android.architecture.blueprints.todoapp.util.showSnackBar
 import org.koin.android.contextaware.ContextAwareFragment
-import org.koin.android.ext.android.bindProperty
 import org.koin.android.ext.android.inject
+import org.koin.android.ext.android.setProperty
 
 /**
  * Main UI for the task detail screen.
@@ -117,7 +117,7 @@ class TaskDetailFragment : ContextAwareFragment(Context.TaskDetail), TaskDetailC
     }
 
     override fun showEditTask(taskId: String) {
-        bindProperty(ARGUMENT_EDIT_TASK_ID, taskId)
+        setProperty(ARGUMENT_EDIT_TASK_ID, taskId)
         startActivityForResult(Intent(context, AddEditTaskActivity::class.java), REQUEST_EDIT_TASK)
     }
 

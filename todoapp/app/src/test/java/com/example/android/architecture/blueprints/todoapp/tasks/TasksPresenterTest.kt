@@ -57,7 +57,7 @@ class TasksPresenterTest {
         MockitoAnnotations.initMocks(this)
 
         // Get a reference to the class under test
-        tasksPresenter = TasksPresenter(tasksRepository)
+        tasksPresenter = TasksPresenter(TasksFilterType.ALL_TASKS, tasksRepository)
         tasksPresenter.view = tasksView
 
         // The presenter won't update the view unless it's active.

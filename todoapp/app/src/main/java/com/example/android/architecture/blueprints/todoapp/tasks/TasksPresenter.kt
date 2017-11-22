@@ -23,7 +23,7 @@ import com.example.android.architecture.blueprints.todoapp.data.source.TasksRepo
 import com.example.android.architecture.blueprints.todoapp.di.TodoAppModule.Properties.CURRENT_FILTERING_KEY
 import com.example.android.architecture.blueprints.todoapp.util.EspressoIdlingResource
 import org.koin.standalone.KoinComponent
-import org.koin.standalone.bindProperty
+import org.koin.standalone.setProperty
 import java.util.*
 
 /**
@@ -42,7 +42,7 @@ class TasksPresenter(override var currentFiltering: TasksFilterType, private val
     }
 
     override fun stop() {
-        bindProperty(CURRENT_FILTERING_KEY, currentFiltering)
+        setProperty(CURRENT_FILTERING_KEY, currentFiltering)
     }
 
     override fun result(requestCode: Int, resultCode: Int) {

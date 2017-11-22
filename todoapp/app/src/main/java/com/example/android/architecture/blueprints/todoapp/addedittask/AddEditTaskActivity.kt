@@ -22,9 +22,9 @@ import com.example.android.architecture.blueprints.todoapp.R
 import com.example.android.architecture.blueprints.todoapp.di.TodoAppModule.Properties.ARGUMENT_EDIT_TASK_ID
 import com.example.android.architecture.blueprints.todoapp.util.replaceFragmentInActivity
 import com.example.android.architecture.blueprints.todoapp.util.setupActionBar
-import org.koin.android.ext.android.bindProperty
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.android.property
+import org.koin.android.ext.android.setProperty
 
 /**
  * Displays an add or edit task screen.
@@ -39,10 +39,7 @@ class AddEditTaskActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.addtask_act)
 
-//        val taskId: String? = intent.getStringExtra(AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID)
-//        bindProperty(AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID, taskId ?: "")
-
-        bindProperty(ARGUMENT_EDIT_TASK_ID, taskId)
+        setProperty(ARGUMENT_EDIT_TASK_ID, taskId)
 
         // Set up the toolbar.
         setupActionBar(R.id.toolbar) {

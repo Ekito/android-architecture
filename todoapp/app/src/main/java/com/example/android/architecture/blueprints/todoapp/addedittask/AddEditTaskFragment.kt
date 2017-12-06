@@ -20,6 +20,7 @@ import android.app.Activity
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
+import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,13 +28,13 @@ import android.widget.TextView
 import com.example.android.architecture.blueprints.todoapp.R
 import com.example.android.architecture.blueprints.todoapp.di.Context
 import com.example.android.architecture.blueprints.todoapp.util.showSnackBar
-import org.koin.android.contextaware.ContextAwareFragment
 import org.koin.android.ext.android.inject
+import org.koin.android.ext.android.releaseContext
 
 /**
  * Main UI for the add task screen. Users can enter a task title and description.
  */
-class AddEditTaskFragment : ContextAwareFragment(Context.AddEditTask), AddEditTaskContract.View {
+class AddEditTaskFragment : Fragment(), AddEditTaskContract.View {
 
     override val presenter by inject<AddEditTaskContract.Presenter>()
 
@@ -51,6 +52,7 @@ class AddEditTaskFragment : ContextAwareFragment(Context.AddEditTask), AddEditTa
 
     override fun onPause() {
         presenter.stop()
+        releaseContext(Context.AddEditTask)
         super.onPause()
     }
 

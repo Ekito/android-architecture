@@ -18,7 +18,7 @@ package com.example.android.architecture.blueprints.todoapp.addedittask
 
 import com.example.android.architecture.blueprints.todoapp.data.Task
 import com.example.android.architecture.blueprints.todoapp.data.source.TasksDataSource
-import com.example.android.architecture.blueprints.todoapp.di.TodoAppModule.Properties.SHOULD_LOAD_DATA_FROM_REPO_KEY
+import com.example.android.architecture.blueprints.todoapp.di.Properties.SHOULD_LOAD_DATA_FROM_REPO_KEY
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.setProperty
 

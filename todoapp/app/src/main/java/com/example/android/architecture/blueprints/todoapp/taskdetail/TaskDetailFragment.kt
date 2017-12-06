@@ -20,22 +20,23 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
+import android.support.v4.app.Fragment
 import android.view.*
 import android.widget.CheckBox
 import android.widget.TextView
 import com.example.android.architecture.blueprints.todoapp.R
 import com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskActivity
 import com.example.android.architecture.blueprints.todoapp.di.Context
-import com.example.android.architecture.blueprints.todoapp.di.TodoAppModule.Properties.ARGUMENT_EDIT_TASK_ID
+import com.example.android.architecture.blueprints.todoapp.di.Properties.ARGUMENT_EDIT_TASK_ID
 import com.example.android.architecture.blueprints.todoapp.util.showSnackBar
-import org.koin.android.contextaware.ContextAwareFragment
 import org.koin.android.ext.android.inject
+import org.koin.android.ext.android.releaseContext
 import org.koin.android.ext.android.setProperty
 
 /**
  * Main UI for the task detail screen.
  */
-class TaskDetailFragment : ContextAwareFragment(Context.TaskDetail), TaskDetailContract.View {
+class TaskDetailFragment : Fragment(), TaskDetailContract.View {
 
     private lateinit var detailTitle: TextView
 
@@ -52,6 +53,11 @@ class TaskDetailFragment : ContextAwareFragment(Context.TaskDetail), TaskDetailC
         super.onResume()
         presenter.view = this
         presenter.start()
+    }
+
+    override fun onPause() {
+        releaseContext(Context.TaskDetail)
+        super.onPause()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

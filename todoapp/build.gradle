@@ -1,7 +1,7 @@
 buildscript {
     ext {
-        kotlin_version = '1.1.51'
-        koin_version = '0.6.0'
+        kotlin_version = '1.1.61'
+        koin_version = '0.7.0-alpha-1'
     }
     repositories {
         jcenter()
@@ -19,6 +19,7 @@ allprojects {
     repositories {
         mavenLocal()
         jcenter()
+//        google()
         maven {
             url 'https://maven.google.com'
         }
@@ -35,10 +36,10 @@ ext {
     minSdkVersion = 14
     targetSdkVersion = 26
     compileSdkVersion = 26
-    buildToolsVersion = '26.0.1'
+    buildToolsVersion = '26.0.2'
 
     // App dependencies
-    supportLibraryVersion = '26.0.0'
+    supportLibraryVersion = '26.0.2'
     guavaVersion = '18.0'
     junitVersion = '4.12'
     mockitoVersion = '2.8.47'

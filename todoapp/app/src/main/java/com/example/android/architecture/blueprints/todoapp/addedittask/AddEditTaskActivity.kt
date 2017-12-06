@@ -19,7 +19,7 @@ package com.example.android.architecture.blueprints.todoapp.addedittask
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.example.android.architecture.blueprints.todoapp.R
-import com.example.android.architecture.blueprints.todoapp.di.TodoAppModule.Properties.ARGUMENT_EDIT_TASK_ID
+import com.example.android.architecture.blueprints.todoapp.di.Properties.ARGUMENT_EDIT_TASK_ID
 import com.example.android.architecture.blueprints.todoapp.util.replaceFragmentInActivity
 import com.example.android.architecture.blueprints.todoapp.util.setupActionBar
 import org.koin.android.ext.android.inject

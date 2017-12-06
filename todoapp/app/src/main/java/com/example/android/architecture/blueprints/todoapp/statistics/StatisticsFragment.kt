@@ -16,19 +16,20 @@
 package com.example.android.architecture.blueprints.todoapp.statistics
 
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.example.android.architecture.blueprints.todoapp.R
 import com.example.android.architecture.blueprints.todoapp.di.Context
-import org.koin.android.contextaware.ContextAwareFragment
 import org.koin.android.ext.android.inject
+import org.koin.android.ext.android.releaseContext
 
 /**
  * Main UI for the statistics screen.
  */
-class StatisticsFragment : ContextAwareFragment(Context.Statistics), StatisticsContract.View {
+class StatisticsFragment : Fragment(), StatisticsContract.View {
 
     private lateinit var statisticsTV: TextView
 
@@ -48,6 +49,11 @@ class StatisticsFragment : ContextAwareFragment(Context.Statistics), StatisticsC
         super.onResume()
         presenter.view = this
         presenter.start()
+    }
+
+    override fun onPause() {
+        releaseContext(Context.Statistics)
+        super.onPause()
     }
 
     override fun setProgressIndicator(active: Boolean) {

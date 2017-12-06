@@ -20,7 +20,7 @@ import com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTa
 import com.example.android.architecture.blueprints.todoapp.data.Task
 import com.example.android.architecture.blueprints.todoapp.data.source.TasksDataSource
 import com.example.android.architecture.blueprints.todoapp.data.source.TasksRepository
-import com.example.android.architecture.blueprints.todoapp.di.TodoAppModule.Properties.CURRENT_FILTERING_KEY
+import com.example.android.architecture.blueprints.todoapp.di.Properties.CURRENT_FILTERING_KEY
 import com.example.android.architecture.blueprints.todoapp.util.EspressoIdlingResource
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.setProperty

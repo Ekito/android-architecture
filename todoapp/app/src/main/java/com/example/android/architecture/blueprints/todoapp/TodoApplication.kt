@@ -18,13 +18,13 @@ class TodoApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        // Start Koin
-        startKoin(this, todoAppModules())
-
         // Display some logs
         val isDebug = (0 != applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE)
         if (isDebug) {
             Koin.logger = AndroidLogger()
         }
+        // Start Koin
+        startKoin(this, todoAppModules)
+
     }
 }

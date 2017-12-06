@@ -2,19 +2,25 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'coolncampKey'
+            keyPassword 'coolncamp'
+            storeFile file('/Users/arnaud/dev/workspace/V2-Cool-n-Camp-Android/coolncamp.jks')
+            storePassword 'coolncamp'
+        }
+    }
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
-
     defaultConfig {
         applicationId "com.example.android.architecture.blueprints.todomvp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+        signingConfig signingConfigs.config
     }
-
     buildTypes {
         debug {
             minifyEnabled true
@@ -31,17 +37,14 @@ android {
             testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguardTest-rules.pro'
         }
     }
-
     // If you need to add more flavors, consider using flavor dimensions.
     productFlavors {
         mock {
             applicationIdSuffix = ".mock"
         }
         prod {
-
         }
     }
-
     // Remove mockRelease as it's not needed.
     android.variantFilter { variant ->
         if (variant.buildType.name.equals('release')
@@ -49,7 +52,6 @@ android {
             variant.setIgnore(true);
         }
     }
-
     // Always show the result of every unit test, even if it passes.
     testOptions.unitTests.all {
         testLogging {
@@ -63,6 +65,7 @@ android {
  all versions in a single place. This improves readability and helps managing project complexity.
  */
 dependencies {
+
     // App's dependencies, including test
     compile "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
     compile "com.android.support:cardview-v7:$rootProject.supportLibraryVersion"

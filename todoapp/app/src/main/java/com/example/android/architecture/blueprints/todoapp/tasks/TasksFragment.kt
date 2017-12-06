@@ -19,6 +19,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
+import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.PopupMenu
@@ -28,18 +29,18 @@ import com.example.android.architecture.blueprints.todoapp.R
 import com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskActivity
 import com.example.android.architecture.blueprints.todoapp.data.Task
 import com.example.android.architecture.blueprints.todoapp.di.Context
-import com.example.android.architecture.blueprints.todoapp.di.TodoAppModule.Properties.EXTRA_TASK_ID
+import com.example.android.architecture.blueprints.todoapp.di.Properties.EXTRA_TASK_ID
 import com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailActivity
 import com.example.android.architecture.blueprints.todoapp.util.showSnackBar
-import org.koin.android.contextaware.ContextAwareFragment
 import org.koin.android.ext.android.inject
+import org.koin.android.ext.android.releaseContext
 import org.koin.android.ext.android.setProperty
 import java.util.*
 
 /**
  * Display a grid of [Task]s. User can choose to view all, active or completed tasks.
  */
-class TasksFragment : ContextAwareFragment(Context.Tasks), TasksContract.View {
+class TasksFragment : Fragment(), TasksContract.View {
 
     override val presenter by inject<TasksContract.Presenter>()
 
@@ -80,6 +81,7 @@ class TasksFragment : ContextAwareFragment(Context.Tasks), TasksContract.View {
 
     override fun onPause() {
         presenter.stop()
+        releaseContext(Context.Tasks)
         super.onPause()
     }
 

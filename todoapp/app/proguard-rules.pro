@@ -5,8 +5,6 @@
 -keep class android.support.test.espresso.IdlingResource { *; }
 -keep class com.google.common.base.Preconditions { *; }
 
--keep class org.koin.**
-
 # For Guava:
 -dontwarn javax.annotation.**
 -dontwarn javax.inject.**

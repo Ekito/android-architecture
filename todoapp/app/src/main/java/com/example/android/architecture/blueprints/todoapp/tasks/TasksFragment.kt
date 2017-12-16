@@ -28,12 +28,10 @@ import android.widget.*
 import com.example.android.architecture.blueprints.todoapp.R
 import com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskActivity
 import com.example.android.architecture.blueprints.todoapp.data.Task
-import com.example.android.architecture.blueprints.todoapp.di.Context
 import com.example.android.architecture.blueprints.todoapp.di.Properties.EXTRA_TASK_ID
 import com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailActivity
 import com.example.android.architecture.blueprints.todoapp.util.showSnackBar
 import org.koin.android.ext.android.inject
-import org.koin.android.ext.android.releaseContext
 import org.koin.android.ext.android.setProperty
 import java.util.*
 
@@ -81,7 +79,7 @@ class TasksFragment : Fragment(), TasksContract.View {
 
     override fun onPause() {
         presenter.stop()
-        releaseContext(Context.Tasks)
+//        releaseContext(Context.Tasks)
         super.onPause()
     }
 

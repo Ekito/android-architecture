@@ -26,11 +26,9 @@ import android.widget.CheckBox
 import android.widget.TextView
 import com.example.android.architecture.blueprints.todoapp.R
 import com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskActivity
-import com.example.android.architecture.blueprints.todoapp.di.Context
 import com.example.android.architecture.blueprints.todoapp.di.Properties.ARGUMENT_EDIT_TASK_ID
 import com.example.android.architecture.blueprints.todoapp.util.showSnackBar
 import org.koin.android.ext.android.inject
-import org.koin.android.ext.android.releaseContext
 import org.koin.android.ext.android.setProperty
 
 /**
@@ -55,10 +53,10 @@ class TaskDetailFragment : Fragment(), TaskDetailContract.View {
         presenter.start()
     }
 
-    override fun onPause() {
-        releaseContext(Context.TaskDetail)
-        super.onPause()
-    }
+//    override fun onPause() {
+//        releaseContext(Context.TaskDetail)
+//        super.onPause()
+//    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {

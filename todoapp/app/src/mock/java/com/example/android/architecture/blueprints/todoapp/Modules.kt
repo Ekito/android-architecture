@@ -10,7 +10,7 @@ import org.koin.dsl.module.applicationContext
  * Repository module
  */
 val RepositoryModule = applicationContext {
-    provide("remoteDataSource") { FakeTasksRemoteDataSource() }
-    provide("localDataSource") { TasksLocalDataSource(get()) }
+    bean("remoteDataSource") { FakeTasksRemoteDataSource() }
+    bean("localDataSource") { TasksLocalDataSource(get()) }
     provide { TasksRepository(get("remoteDataSource"), get("localDataSource")) } bind TasksDataSource::class
 }

@@ -22,9 +22,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.example.android.architecture.blueprints.todoapp.R
-import com.example.android.architecture.blueprints.todoapp.di.Context
 import org.koin.android.ext.android.inject
-import org.koin.android.ext.android.releaseContext
 
 /**
  * Main UI for the statistics screen.
@@ -51,10 +49,10 @@ class StatisticsFragment : Fragment(), StatisticsContract.View {
         presenter.start()
     }
 
-    override fun onPause() {
-        releaseContext(Context.Statistics)
-        super.onPause()
-    }
+//    override fun onPause() {
+//        releaseContext(Context.Statistics)
+//        super.onPause()
+//    }
 
     override fun setProgressIndicator(active: Boolean) {
         if (active) {

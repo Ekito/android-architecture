@@ -24,26 +24,6 @@ import org.koin.dsl.module.applicationContext
  * Koin main module
  */
 val TodoAppModule = applicationContext {
-    //    context(Tasks) {
-//        provide { TasksFragment() }
-//        provide { TasksPresenter(getProperty(CURRENT_FILTERING_KEY, TasksFilterType.ALL_TASKS), get()) } bind TasksContract.Presenter::class
-//    }
-//
-//    context(TaskDetail) {
-//        provide { TaskDetailFragment() }
-//        provide { TaskDetailPresenter(getProperty(EXTRA_TASK_ID), get()) } bind TaskDetailContract.Presenter::class
-//    }
-//
-//    context(Statistics) {
-//        provide { StatisticsFragment() }
-//        provide { StatisticsPresenter(get()) } bind StatisticsContract.Presenter::class
-//    }
-//
-//    context(AddEditTask) {
-//        provide { AddEditTaskFragment() }
-//        provide { AddEditTaskPresenter(getProperty(ARGUMENT_EDIT_TASK_ID), get(), getProperty(SHOULD_LOAD_DATA_FROM_REPO_KEY, true)) } bind AddEditTaskContract.Presenter::class
-//    }
-
     factory { TasksFragment() }
     factory { TasksPresenter(getProperty(CURRENT_FILTERING_KEY, TasksFilterType.ALL_TASKS), get()) as TasksContract.Presenter }
 
@@ -69,14 +49,3 @@ object Properties {
     const val ARGUMENT_EDIT_TASK_ID = "EDIT_TASK_ID"
     const val SHOULD_LOAD_DATA_FROM_REPO_KEY = "SHOULD_LOAD_DATA_FROM_REPO_KEY"
 }
-
-
-///**
-// * Module constants
-// */
-//object Context {
-//    val Tasks = "Tasks"
-//    val TaskDetail = "TaskDetail"
-//    val Statistics = "Statistics"
-//    val AddEditTask = "AddEditTask"
-//}

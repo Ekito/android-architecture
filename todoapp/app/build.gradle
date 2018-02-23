@@ -101,7 +101,7 @@ dependencies {
     androidTestCompile "com.android.support:design:$rootProject.supportLibraryVersion"
 
     // Kotlin
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     // Koin
     compile "org.koin:koin-android:$koin_version"

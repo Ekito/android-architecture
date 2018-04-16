@@ -105,5 +105,6 @@ dependencies {
 
     // Koin
     compile "org.koin:koin-android:$koin_version"
+
     testCompile "org.koin:koin-test:$koin_version"
 }

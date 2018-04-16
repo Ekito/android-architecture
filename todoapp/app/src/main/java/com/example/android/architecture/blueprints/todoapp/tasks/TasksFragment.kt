@@ -22,7 +22,6 @@ import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.PopupMenu
 import android.view.*
 import android.widget.*
 import com.example.android.architecture.blueprints.todoapp.R
@@ -87,8 +86,10 @@ class TasksFragment : Fragment(), TasksContract.View {
         presenter.result(requestCode, resultCode)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val root = inflater.inflate(R.layout.tasks_frag, container, false)
 
         // Set up tasks view
@@ -98,9 +99,9 @@ class TasksFragment : Fragment(), TasksContract.View {
             // Set up progress indicator
             findViewById<ScrollChildSwipeRefreshLayout>(R.id.refresh_layout).apply {
                 setColorSchemeColors(
-                        ContextCompat.getColor(activity, R.color.colorPrimary),
-                        ContextCompat.getColor(activity, R.color.colorAccent),
-                        ContextCompat.getColor(activity, R.color.colorPrimaryDark)
+                    ContextCompat.getColor(activity!!, R.color.colorPrimary),
+                    ContextCompat.getColor(activity!!, R.color.colorAccent),
+                    ContextCompat.getColor(activity!!, R.color.colorPrimaryDark)
                 )
                 // Set the scrolling view in the custom SwipeRefreshLayout.
                 scrollUpChild = listView
@@ -120,7 +121,7 @@ class TasksFragment : Fragment(), TasksContract.View {
         }
 
         // Set up floating action button
-        activity.findViewById<FloatingActionButton>(R.id.fab_add_task).apply {
+        activity!!.findViewById<FloatingActionButton>(R.id.fab_add_task).apply {
             setImageResource(R.drawable.ic_add)
             setOnClickListener { presenter.addNewTask() }
         }
@@ -143,7 +144,7 @@ class TasksFragment : Fragment(), TasksContract.View {
     }
 
     override fun showFilteringPopUpMenu() {
-        PopupMenu(context, activity.findViewById(R.id.menu_filter)).apply {
+        PopupMenu(context, activity!!.findViewById(R.id.menu_filter)).apply {
             menuInflater.inflate(R.menu.filter_tasks, menu)
             setOnMenuItemClickListener { item ->
                 when (item.itemId) {
@@ -173,15 +174,27 @@ class TasksFragment : Fragment(), TasksContract.View {
     }
 
     override fun showNoActiveTasks() {
-        showNoTasksViews(resources.getString(R.string.no_tasks_active), R.drawable.ic_check_circle_24dp, false)
+        showNoTasksViews(
+            resources.getString(R.string.no_tasks_active),
+            R.drawable.ic_check_circle_24dp,
+            false
+        )
     }
 
     override fun showNoTasks() {
-        showNoTasksViews(resources.getString(R.string.no_tasks_all), R.drawable.ic_assignment_turned_in_24dp, false)
+        showNoTasksViews(
+            resources.getString(R.string.no_tasks_all),
+            R.drawable.ic_assignment_turned_in_24dp,
+            false
+        )
     }
 
     override fun showNoCompletedTasks() {
-        showNoTasksViews(resources.getString(R.string.no_tasks_completed), R.drawable.ic_verified_user_24dp, false)
+        showNoTasksViews(
+            resources.getString(R.string.no_tasks_completed),
+            R.drawable.ic_verified_user_24dp,
+            false
+        )
     }
 
     override fun showSuccessfullySavedMessage() {
@@ -243,8 +256,8 @@ class TasksFragment : Fragment(), TasksContract.View {
         view?.showSnackBar(message, Snackbar.LENGTH_LONG)
     }
 
-    private class TasksAdapter(tasks: List<Task>, private val itemListener: TaskItemListener)
-        : BaseAdapter() {
+    private class TasksAdapter(tasks: List<Task>, private val itemListener: TaskItemListener) :
+        BaseAdapter() {
 
         var tasks: List<Task> = tasks
             set(tasks) {
@@ -261,7 +274,7 @@ class TasksFragment : Fragment(), TasksContract.View {
         override fun getView(i: Int, view: View?, viewGroup: ViewGroup): View {
             val task = getItem(i)
             val rowView = view ?: LayoutInflater.from(viewGroup.context)
-                    .inflate(R.layout.task_item, viewGroup, false)
+                .inflate(R.layout.task_item, viewGroup, false)
 
             with(rowView.findViewById<TextView>(R.id.title)) {
                 text = task.titleForList
@@ -271,8 +284,8 @@ class TasksFragment : Fragment(), TasksContract.View {
                 // Active/completed task UI
                 isChecked = task.isCompleted
                 val rowViewBackground =
-                        if (task.isCompleted) R.drawable.list_completed_touch_feedback
-                        else R.drawable.touch_feedback
+                    if (task.isCompleted) R.drawable.list_completed_touch_feedback
+                    else R.drawable.touch_feedback
                 rowView.setBackgroundResource(rowViewBackground)
                 setOnClickListener {
                     if (!task.isCompleted) {

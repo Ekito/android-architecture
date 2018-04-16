@@ -17,6 +17,5 @@ class TodoApplication : Application() {
 
         // Start Koin
         startKoin(this, todoAppModules)
-
     }
 }
